@@ -1053,7 +1053,6 @@
       </div>
     </div>
     <div class="floating-badge">
-      <span>✦</span>
       Einfach. Fair. Lokal.
     </div>
   </div>
@@ -1396,7 +1395,7 @@
   document.querySelectorAll('.btn-form').forEach(btn => {
     btn.addEventListener('click', () => {
       const card = btn.closest('.form-card');
-        const inputs = card.querySelectorAll('input, select');
+      const inputs = card.querySelectorAll('input, select');
       let filled = true;
       inputs.forEach(input => {
         if (!input.value) filled = false;
