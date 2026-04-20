@@ -983,6 +983,7 @@
     .categories-grid { grid-template-columns: repeat(2, 1fr); }
     .register-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
+    #helfer [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
   }
 </style>
 </head>
@@ -990,7 +991,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">Near<span>Care</span></div>
+  <a href="#" class="logo" style="text-decoration: none;">Near<span>Care</span></a>
   <ul class="nav-links">
     <li><a href="#how">Wie es funktioniert</a></li>
     <li><a href="#heim">Tätigkeiten</a></li>
@@ -1063,8 +1064,8 @@
   <div class="how-inner">
     <div class="how-header reveal">
       <div class="section-tag">So funktioniert's</div>
-      <h2 class="section-title">Einfach. Schnell. Unkompliziert.</h2>
-      <p class="section-sub">NearCare ist eine digitale Vermittlungsplattform – wir bringen die richtigen Menschen zusammen.</p>
+      <h2 class="section-title">So läuft's bei uns</h2>
+      <p class="section-sub">Kein langer Papierkram, kein kompliziertes System. Einfach anmelden und loslegen.</p>
     </div>
 
     <div class="tabs">
@@ -1075,36 +1076,36 @@
     <div id="steps-heim" class="steps-grid reveal">
       <div class="step-card" data-step="1">
         <div class="step-icon">📋</div>
-        <h3>Bedarf einstellen</h3>
-        <p>Erstellen Sie einen Einsatz auf unserer Plattform – Datum, Uhrzeit, Tätigkeit. In wenigen Minuten.</p>
+        <h3>Einsatz einstellen</h3>
+        <p>Sagen Sie uns, wann Sie Unterstützung brauchen und was anfällt. Das dauert keine fünf Minuten.</p>
       </div>
       <div class="step-card" data-step="2">
         <div class="step-icon">🤝</div>
-        <h3>Helfer wählen</h3>
-        <p>Geeignete Helfer melden sich. Sie wählen den passenden aus – anhand von Profil und Bewertungen.</p>
+        <h3>Helfer aussuchen</h3>
+        <p>Passende Helfer aus der Region melden sich bei Ihnen. Sie entscheiden, wer kommt – auf Basis von Profil und echten Bewertungen.</p>
       </div>
       <div class="step-card" data-step="3">
         <div class="step-icon">✅</div>
-        <h3>Einsatz bestätigen</h3>
-        <p>Der Helfer erscheint pünktlich. Sie zahlen den vereinbarten Stundenlohn direkt an den Helfer.</p>
+        <h3>Loslegen</h3>
+        <p>Der Helfer kommt vorbei, die Vergütung läuft direkt zwischen Ihnen. Wir bleiben im Hintergrund – für Sie da, wenn Sie uns brauchen.</p>
       </div>
     </div>
 
     <div id="steps-helfer" class="steps-grid reveal" style="display:none">
       <div class="step-card" data-step="1">
         <div class="step-icon">👤</div>
-        <h3>Profil erstellen</h3>
-        <p>Registriere dich kostenlos, gib deine Verfügbarkeit an und erstelle dein persönliches Profil.</p>
+        <h3>Kurz anmelden</h3>
+        <p>Erstell dir ein Profil, sag wann du Zeit hast – fertig. Kostenlos, ohne Haken.</p>
       </div>
       <div class="step-card" data-step="2">
         <div class="step-icon">🔍</div>
-        <h3>Einsatz finden</h3>
-        <p>Durchsuche verfügbare Einsätze in deiner Nähe und bewirb dich mit einem Klick.</p>
+        <h3>Einsatz in der Nähe finden</h3>
+        <p>Schau, was gerade in deiner Gegend gesucht wird, und meld dich einfach. Kein Bewerbungsschreiben, kein Stress.</p>
       </div>
       <div class="step-card" data-step="3">
         <div class="step-icon">💶</div>
-        <h3>Verdiene fair</h3>
-        <p>Erscheine pünktlich, leiste gute Arbeit und erhalte deinen Lohn direkt vom Heim oder der Privatperson.</p>
+        <h3>Hingehen & Gutes tun</h3>
+        <p>Du kommst vorbei, hilfst wo du kannst – und bekommst deinen Lohn direkt. So einfach ist das.</p>
       </div>
     </div>
   </div>
@@ -1120,44 +1121,24 @@
     </div>
     <div class="categories-grid reveal">
       <div class="cat-card">
-        <div class="cat-emoji">🚶‍♀️</div>
-        <h4>Spaziergänge</h4>
-        <p>Begleitung im Freien</p>
-      </div>
-      <div class="cat-card">
         <div class="cat-emoji">🎯</div>
-        <h4>Freizeitgestaltung</h4>
-        <p>Spiele, Basteln, Lesen</p>
-      </div>
-      <div class="cat-card">
-        <div class="cat-emoji">🛒</div>
-        <h4>Besorgungen</h4>
-        <p>Einkaufen, Apotheke</p>
+        <h4>Freizeit & Aktivitäten</h4>
+        <p>Spaziergänge, Spiele, Basteln und mehr</p>
       </div>
       <div class="cat-card">
         <div class="cat-emoji">💬</div>
-        <h4>Gesellschaft</h4>
-        <p>Gespräche, Zuhören</p>
+        <h4>Gesellschaft & Gespräche</h4>
+        <p>Zuhören, Plaudern, Begleiten</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">🏠</div>
+        <h4>Alltagsarbeiten</h4>
+        <p>Besorgungen, Einkaufen, kleine Erledigungen</p>
       </div>
       <div class="cat-card">
         <div class="cat-emoji">🍽️</div>
         <h4>Mahlzeiten</h4>
-        <p>Beim Essen begleiten</p>
-      </div>
-      <div class="cat-card">
-        <div class="cat-emoji">📱</div>
-        <h4>Digital-Hilfe</h4>
-        <p>Handy, Tablet erklären</p>
-      </div>
-      <div class="cat-card">
-        <div class="cat-emoji">✂️</div>
-        <h4>Alltagshilfe</h4>
-        <p>Kleine Erledigungen</p>
-      </div>
-      <div class="cat-card">
-        <div class="cat-emoji">🌿</div>
-        <h4>Garten & Natur</h4>
-        <p>Gartenaktivitäten</p>
+        <p>Beim Essen unterstützen und begleiten</p>
       </div>
     </div>
   </div>
@@ -1165,56 +1146,27 @@
 
 <!-- FOR HELFER -->
 <section id="helfer" style="background: var(--white);">
-  <div class="split">
-    <div class="reveal">
+  <div style="max-width: 1100px; margin: 0 auto; padding: 0 2rem;">
+    <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
       <div class="section-tag">Für Helfer</div>
       <h2 class="section-title">Verdiene fair,<br>arbeite flexibel</h2>
-      <p class="section-sub">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon">💶</div>
-          <div class="feature-text">
-            <h4>Fairer Stundenlohn</h4>
-            <p>Marktgerechte Vergütung – direkt vom Auftraggeber. Geringfügig und ohne Abzüge möglich.</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">📅</div>
-          <div class="feature-text">
-            <h4>100% flexibel</h4>
-            <p>Du entscheidest wann und wie oft du arbeitest. Perfekt neben Schule oder Studium.</p>
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">⭐</div>
-          <div class="feature-text">
-            <h4>Bewertungssystem</h4>
-            <p>Sammle positive Bewertungen und erhalte mehr und bessere Einsätze.</p>
-          </div>
-        </div>
-      </div>
+      <p class="section-sub" style="max-width: 600px; margin: 0 auto;">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
     </div>
-    <div class="split-visual reveal">
-      <div style="background: var(--cream); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-          <span style="font-weight: 700; font-size: 0.9rem;">Deine Einsätze diese Woche</span>
-          <span style="color: var(--terra); font-weight: 700; font-size: 0.9rem;">+54€</span>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 0.7rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
-            <span>🏠 Sozialzentrum Lochau</span>
-            <span style="color: var(--gray);">3h · 18€/h</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
-            <span>🏠 Pflegeheim Hard</span>
-            <span style="color: var(--gray);">2h · 18€/h</span>
-          </div>
-        </div>
+    <div class="reveal" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">💶</div>
+        <h4 style="margin-bottom: 0.5rem;">Fairer Lohn</h4>
+        <p style="font-size: 0.9rem; color: var(--gray);">Du bekommst deinen Lohn direkt – geringfügig, ohne Abzüge, ohne Umwege.</p>
       </div>
-      <div style="background: var(--navy); border-radius: 14px; padding: 1.5rem; color: white;">
-        <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em;">Diesen Monat</div>
-        <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--warm);">538€</div>
-        <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.3rem;">Geringfügig · Brutto = Netto ✓</div>
+      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">📅</div>
+        <h4 style="margin-bottom: 0.5rem;">Dein Rhythmus</h4>
+        <p style="font-size: 0.9rem; color: var(--gray);">Du entscheidest, wann du Zeit hast – ob einmal die Woche oder öfter.</p>
+      </div>
+      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+        <div style="font-size: 2rem; margin-bottom: 1rem;">⭐</div>
+        <h4 style="margin-bottom: 0.5rem;">Dein Einsatz zählt</h4>
+        <p style="font-size: 0.9rem; color: var(--gray);">Gute Einsätze sprechen sich rum – dein Ruf und deine Chancen wachsen mit der Zeit.</p>
       </div>
     </div>
   </div>
