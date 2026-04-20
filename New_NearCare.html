@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NearCare – Nähe die zählt</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1F2D;
+    --terra: #C45E3E;
+    --terra-light: #D4724F;
+    --warm: #F0C987;
+    --cream: #F8F5EF;
+    --white: #FFFFFF;
+    --gray: #6B7280;
+    --light: #F0F4F8;
+    --border: #E5E7EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(248,245,239,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: all 0.3s;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+  }
+
+  .logo span { color: var(--terra); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none; align-items: center;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--navy);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .nav-cta {
+    background: var(--terra) !important;
+    color: var(--white) !important;
+    padding: 0.55rem 1.3rem;
+    border-radius: 6px;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--terra-light) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 5% 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60%;
+    height: 120%;
+    background: radial-gradient(ellipse at center, rgba(196,94,62,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(196,94,62,0.1);
+    color: var(--terra);
+    border: 1px solid rgba(196,94,62,0.25);
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--terra);
+    border-radius: 50%;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--terra);
+    position: relative;
+  }
+
+  .hero h1 em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 3px;
+    background: var(--warm);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--gray);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(13,31,45,0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(13,31,45,0.25);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--navy);
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--navy);
+    background: rgba(13,31,45,0.04);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--gray);
+    font-weight: 500;
+    margin-top: 0.2rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    position: relative;
+    animation: fadeIn 0.8s ease 0.3s both;
+  }
+
+  .hero-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--terra), var(--warm));
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--terra), var(--terra-light));
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .card-header-text h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .card-header-text p {
+    font-size: 0.78rem;
+    color: var(--gray);
+  }
+
+  .status-badge {
+    margin-left: auto;
+    background: rgba(196,94,62,0.1);
+    color: var(--terra);
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .task-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1rem;
+    background: var(--cream);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--navy);
+    transition: transform 0.2s;
+  }
+
+  .task-item:hover { transform: translateX(4px); }
+
+  .task-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .task-icon.green { background: rgba(196,94,62,0.12); }
+  .task-icon.gold { background: rgba(201,168,76,0.12); }
+  .task-icon.blue { background: rgba(59,130,246,0.12); }
+
+  .task-meta {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--gray);
+  }
+
+  .floating-badge {
+    position: absolute;
+    bottom: -1rem;
+    right: -1rem;
+    background: var(--navy);
+    color: var(--white);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(13,31,45,0.2);
+  }
+
+  .floating-badge span {
+    display: block;
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
+    color: var(--warm);
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 6rem 5%;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 1.05rem;
+    color: var(--gray);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    background: var(--white);
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .how-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .how-header .section-sub { margin: 0 auto; }
+
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    background: var(--cream);
+    padding: 0.4rem;
+    border-radius: 12px;
+    width: fit-content;
+    margin: 0 auto 3rem;
+  }
+
+  .tab {
+    padding: 0.65rem 1.8rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray);
+    background: transparent;
+    transition: all 0.25s;
+  }
+
+  .tab.active {
+    background: var(--white);
+    color: var(--navy);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .step-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+
+  .step-card:hover { transform: translateY(-4px); }
+
+  .step-card::after {
+    content: attr(data-step);
+    position: absolute;
+    top: -0.5rem;
+    right: 1rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(13,31,45,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .step-icon {
+    width: 52px; height: 52px;
+    background: var(--white);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .step-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+
+  .step-card p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* ── SPLIT SECTIONS ── */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .split.reverse { direction: rtl; }
+  .split.reverse > * { direction: ltr; }
+
+  .split-visual {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .feature-icon {
+    width: 40px; height: 40px;
+    background: rgba(196,94,62,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .feature-text h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+  }
+
+  .feature-text p {
+    font-size: 0.84rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── PRICING ── */
+  .pricing {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .pricing .section-tag { color: var(--warm); }
+  .pricing .section-title { color: var(--white); }
+  .pricing .section-sub { color: rgba(255,255,255,0.6); }
+
+  .pricing-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .pricing-header .section-sub { margin: 0 auto; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .pricing-card.featured {
+    background: var(--terra);
+    border-color: var(--terra);
+  }
+
+  .pricing-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1rem;
+  }
+
+  .pricing-card.featured .pricing-label { color: rgba(255,255,255,0.8); }
+
+  .pricing-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 1.5rem 0 0.3rem;
+    color: var(--white);
+  }
+
+  .price sup {
+    font-size: 1.2rem;
+    vertical-align: super;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .price-period {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--warm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pricing-card.featured .pricing-features li::before { color: var(--white); }
+
+  .btn-pricing {
+    display: block;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    color: var(--white);
+    transition: all 0.2s;
+  }
+
+  .btn-pricing:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  .pricing-card.featured .btn-pricing {
+    background: var(--white);
+    color: var(--terra);
+    border-color: var(--white);
+  }
+
+  .pricing-card.featured .btn-pricing:hover {
+    background: var(--cream);
+  }
+
+  /* ── CATEGORIES ── */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    margin-top: 3rem;
+  }
+
+  .cat-card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .cat-card:hover {
+    border-color: var(--terra);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
+  }
+
+  .cat-emoji { font-size: 2rem; margin-bottom: 0.7rem; }
+
+  .cat-card h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+
+  .cat-card p {
+    font-size: 0.75rem;
+    color: var(--gray);
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--terra) 0%, #A34830 100%);
+    text-align: center;
+    color: var(--white);
+    padding: 6rem 5%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 60%);
+  }
+
+  .cta-section .section-title { color: var(--white); margin-bottom: 1rem; }
+
+  .cta-section p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-cta-white {
+    background: var(--white);
+    color: var(--terra);
+    padding: 0.9rem 2.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+
+  .btn-cta-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+
+  .btn-cta-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    transition: all 0.2s;
+  }
+
+  .btn-cta-outline:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.6);
+    padding: 3rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo { color: var(--white); font-size: 1.2rem; }
+
+  footer p { font-size: 0.82rem; }
+
+  footer a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--white); }
+
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  /* ── REGISTRATION FORMS ── */
+  .register {
+    background: var(--cream);
+  }
+
+  .register-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .register-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .form-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .form-card.heim::before { background: var(--terra); }
+  .form-card.helfer::before { background: var(--warm); }
+
+  .form-card-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .form-card.heim .form-card-tag { color: var(--terra); }
+  .form-card.helfer .form-card-tag { color: var(--warm); }
+
+  .form-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-card > p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    margin-bottom: 1.8rem;
+    line-height: 1.6;
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.01em;
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--navy);
+    background: var(--cream);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--terra);
+    background: var(--white);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .btn-form {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .form-card.heim .btn-form {
+    background: var(--terra);
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(196,94,62,0.3);
+  }
+
+  .form-card.helfer .btn-form {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(13,31,45,0.2);
+  }
+
+  .btn-form:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 1rem;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 5rem; }
+    .hero-visual { display: none; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; gap: 2.5rem; }
+    .split.reverse { direction: ltr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    .register-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Near<span>Care</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">Wie es funktioniert</a></li>
+    <li><a href="#heim">Tätigkeiten</a></li>
+    <li><a href="#preise">Preise</a></li>
+    <li><a href="#register" class="nav-cta">Jetzt starten</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+
+    <h1>Betreuung neu<br><em>gedacht</em></h1>
+    <p class="hero-sub">NearCare verbindet Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuungstätigkeiten. Flexibel, einfach, fair.</p>
+    <div class="hero-actions">
+      <a href="#register" class="btn-primary">Jetzt starten →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">47</div>
+        <div class="stat-label">Altersheime<br>in Vorarlberg</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">21.9k</div>
+        <div class="stat-label">Pflegebedürftige<br>in Vorarlberg</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Fokus auf<br>Vorarlberg</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="card-header">
+        <div class="avatar">SL</div>
+        <div class="card-header-text">
+          <h4>Sozialzentrum Lochau</h4>
+          <p>Aktive Heime · Vorarlberg</p>
+        </div>
+        <span class="status-badge">● Aktiv</span>
+      </div>
+      <div class="task-list">
+        <div class="task-item">
+          <div class="task-icon green">🚶</div>
+          Spaziergang begleiten
+          <span class="task-meta">Heute · 14:00</span>
+        </div>
+        <div class="task-item">
+          <div class="task-icon gold">🎮</div>
+          Gesellschaftsspiele spielen
+          <span class="task-meta">Morgen · 10:00</span>
+        </div>
+        <div class="task-item">
+          <div class="task-icon blue">🛒</div>
+          Besorgungen erledigen
+          <span class="task-meta">Fr · 09:00</span>
+        </div>
+      </div>
+    </div>
+    <div class="floating-badge">
+      <span>✦</span>
+      Einfach. Fair. Lokal.
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="how-header reveal">
+      <div class="section-tag">So funktioniert's</div>
+      <h2 class="section-title">Einfach. Schnell. Unkompliziert.</h2>
+      <p class="section-sub">NearCare ist eine digitale Vermittlungsplattform – wir bringen die richtigen Menschen zusammen.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('heim', this)">Für Altersheime</button>
+      <button class="tab" onclick="switchTab('helfer', this)">Für Helfer</button>
+    </div>
+
+    <div id="steps-heim" class="steps-grid reveal">
+      <div class="step-card" data-step="1">
+        <div class="step-icon">📋</div>
+        <h3>Bedarf einstellen</h3>
+        <p>Erstellen Sie einen Einsatz auf unserer Plattform – Datum, Uhrzeit, Tätigkeit. In wenigen Minuten.</p>
+      </div>
+      <div class="step-card" data-step="2">
+        <div class="step-icon">🤝</div>
+        <h3>Helfer wählen</h3>
+        <p>Geeignete Helfer melden sich. Sie wählen den passenden aus – anhand von Profil und Bewertungen.</p>
+      </div>
+      <div class="step-card" data-step="3">
+        <div class="step-icon">✅</div>
+        <h3>Einsatz bestätigen</h3>
+        <p>Der Helfer erscheint pünktlich. Sie zahlen den vereinbarten Stundenlohn direkt an den Helfer.</p>
+      </div>
+    </div>
+
+    <div id="steps-helfer" class="steps-grid reveal" style="display:none">
+      <div class="step-card" data-step="1">
+        <div class="step-icon">👤</div>
+        <h3>Profil erstellen</h3>
+        <p>Registriere dich kostenlos, gib deine Verfügbarkeit an und erstelle dein persönliches Profil.</p>
+      </div>
+      <div class="step-card" data-step="2">
+        <div class="step-icon">🔍</div>
+        <h3>Einsatz finden</h3>
+        <p>Durchsuche verfügbare Einsätze in deiner Nähe und bewirb dich mit einem Klick.</p>
+      </div>
+      <div class="step-card" data-step="3">
+        <div class="step-icon">💶</div>
+        <h3>Verdiene fair</h3>
+        <p>Erscheine pünktlich, leiste gute Arbeit und erhalte deinen Lohn direkt vom Heim oder der Privatperson.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÄTIGKEITEN -->
+<section id="heim" style="background: var(--cream);">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="reveal">
+      <div class="section-tag">Tätigkeiten</div>
+      <h2 class="section-title">Was unsere Helfer übernehmen</h2>
+      <p class="section-sub">Nur nicht-medizinische Tätigkeiten – damit das Pflegepersonal sich auf das Wesentliche konzentrieren kann.</p>
+    </div>
+    <div class="categories-grid reveal">
+      <div class="cat-card">
+        <div class="cat-emoji">🚶‍♀️</div>
+        <h4>Spaziergänge</h4>
+        <p>Begleitung im Freien</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">🎯</div>
+        <h4>Freizeitgestaltung</h4>
+        <p>Spiele, Basteln, Lesen</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">🛒</div>
+        <h4>Besorgungen</h4>
+        <p>Einkaufen, Apotheke</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">💬</div>
+        <h4>Gesellschaft</h4>
+        <p>Gespräche, Zuhören</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">🍽️</div>
+        <h4>Mahlzeiten</h4>
+        <p>Beim Essen begleiten</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">📱</div>
+        <h4>Digital-Hilfe</h4>
+        <p>Handy, Tablet erklären</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">✂️</div>
+        <h4>Alltagshilfe</h4>
+        <p>Kleine Erledigungen</p>
+      </div>
+      <div class="cat-card">
+        <div class="cat-emoji">🌿</div>
+        <h4>Garten & Natur</h4>
+        <p>Gartenaktivitäten</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR HELFER -->
+<section id="helfer" style="background: var(--white);">
+  <div class="split">
+    <div class="reveal">
+      <div class="section-tag">Für Helfer</div>
+      <h2 class="section-title">Verdiene fair,<br>arbeite flexibel</h2>
+      <p class="section-sub">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">💶</div>
+          <div class="feature-text">
+            <h4>Fairer Stundenlohn</h4>
+            <p>Marktgerechte Vergütung – direkt vom Auftraggeber. Geringfügig und ohne Abzüge möglich.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📅</div>
+          <div class="feature-text">
+            <h4>100% flexibel</h4>
+            <p>Du entscheidest wann und wie oft du arbeitest. Perfekt neben Schule oder Studium.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⭐</div>
+          <div class="feature-text">
+            <h4>Bewertungssystem</h4>
+            <p>Sammle positive Bewertungen und erhalte mehr und bessere Einsätze.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="split-visual reveal">
+      <div style="background: var(--cream); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span style="font-weight: 700; font-size: 0.9rem;">Deine Einsätze diese Woche</span>
+          <span style="color: var(--terra); font-weight: 700; font-size: 0.9rem;">+54€</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+            <span>🏠 Sozialzentrum Lochau</span>
+            <span style="color: var(--gray);">3h · 18€/h</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+            <span>🏠 Pflegeheim Hard</span>
+            <span style="color: var(--gray);">2h · 18€/h</span>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--navy); border-radius: 14px; padding: 1.5rem; color: white;">
+        <div style="font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.08em;">Diesen Monat</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: var(--warm);">538€</div>
+        <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.3rem;">Geringfügig · Brutto = Netto ✓</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="preise">
+  <div class="pricing-inner">
+    <div class="pricing-header reveal">
+      <div class="section-tag">Preise</div>
+      <h2 class="section-title">Transparent & fair</h2>
+      <p class="section-sub">Für Altersheime und Privatpersonen. Helfer nutzen NearCare kostenlos.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-label">Für Privatpersonen</div>
+        <h3>B2C</h3>
+        <div class="price"><sup>€</sup>0</div>
+        <div class="price-period">Registrierung kostenlos</div>
+        <ul class="pricing-features">
+          <li>Zugang zur Plattform</li>
+          <li>Helfer in deiner Nähe finden</li>
+          <li>Bewertungssystem</li>
+          <li>Direktzahlung an Helfer</li>
+        </ul>
+        <a href="#register" class="btn-pricing">Jetzt registrieren</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-label">Für Altersheime</div>
+        <h3>B2B</h3>
+        <div class="price"><sup>€</sup>79</div>
+        <div class="price-period">pro Monat · zzgl. MwSt.</div>
+        <ul class="pricing-features">
+          <li>Unbegrenzte Einsätze</li>
+          <li>Dedizierter Ansprechpartner</li>
+          <li>Verifizierte Helfer</li>
+          <li>Digitale Zeiterfassung</li>
+          <li>Monatliche Abrechnung</li>
+        </ul>
+        <a href="#register" class="btn-pricing">Kostenlos testen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTER -->
+<section class="register" id="register">
+  <div class="register-inner">
+    <div style="text-align: center;" class="reveal">
+      <div class="section-tag">Jetzt starten</div>
+      <h2 class="section-title">Bereit loszulegen?</h2>
+      <p class="section-sub" style="margin: 0 auto;">Registriere dich jetzt – kostenlos und unverbindlich. Wir melden uns persönlich bei dir.</p>
+    </div>
+
+    <div class="register-grid">
+      <!-- HEIM FORM -->
+      <div class="form-card heim reveal"><form action="https://formspree.io/f/mnjlzegn" method="POST">
+        <div class="form-card-tag">🏠 Für Altersheime & Pflegeeinrichtungen</div>
+        <h3>Als Einrichtung anmelden</h3>
+        <p>Testen Sie NearCare kostenlos in Ihrer Einrichtung. Keine Bindung, kein Risiko.</p>
+        <div class="form-group">
+          <label>Name der Einrichtung</label>
+          <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ansprechperson</label>
+            <input type="text" name="name" placeholder="Vor- und Nachname">
+          </div>
+          <div class="form-group">
+            <label>Funktion</label>
+            <input type="text" name="funktion" placeholder="z.B. Heimleitung">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail Adresse</label>
+          <input type="email" name="email" placeholder="name@einrichtung.at">
+        </div>
+        <div class="form-group">
+          <label>Telefonnummer</label>
+          <input type="tel" name="telefon" placeholder="+43 ...">
+        </div>
+        <div class="form-group">
+          <label>Gemeinde / Ort</label>
+          <input type="text" name="ort" placeholder="z.B. Lochau">
+        </div>
+        <button type="submit" class="btn-form">Kostenlos anmelden →</button>
+        <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+      </form></div>
+
+      <!-- HELFER FORM -->
+      <div class="form-card helfer reveal"><form action="https://formspree.io/f/xzdyvnjj" method="POST">
+        <div class="form-card-tag">🎓 Für Schüler & Studenten</div>
+        <h3>Als Helfer bewerben</h3>
+        <p>Verdiene flexibel neben Schule oder Studium und tue dabei Gutes.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vorname</label>
+            <input type="text" name="vorname" placeholder="Dein Vorname">
+          </div>
+          <div class="form-group">
+            <label>Nachname</label>
+            <input type="text" name="nachname" placeholder="Dein Nachname">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail Adresse</label>
+          <input type="email" name="email" placeholder="name@beispiel.at">
+        </div>
+        <div class="form-group">
+          <label>Telefonnummer</label>
+          <input type="tel" name="telefon" placeholder="+43 ...">
+        </div>
+        <div class="form-group">
+          <label>Ich bin...</label>
+          <select name="status">
+            <option value="">Bitte auswählen</option>
+            <option>Schüler/in</option>
+            <option>Student/in</option>
+            <option>Anderes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Wohnort</label>
+          <input type="text" name="wohnort" placeholder="z.B. Bregenz">
+        </div>
+        <button type="submit" class="btn-form">Jetzt bewerben →</button>
+        <p class="form-note">100% kostenlos · Kein Risiko · Jederzeit abmeldbar</p>
+      </form></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-tag" style="color: rgba(255,255,255,0.6);">NearCare · Vorarlberg</div>
+  <h2 class="section-title">Nähe die wirklich zählt.</h2>
+  <p>Gemeinsam schaffen wir mehr Zeit für das Wesentliche – in der Pflege und im Leben.</p>
+  <div class="cta-buttons">
+    <a href="#register" class="btn-cta-white">Jetzt starten</a>
+    <a href="mailto:hello@nearcare.at" class="btn-cta-outline">Kontakt aufnehmen</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Near<span>Care</span></div>
+  <p>© 2025 NearCare · Vorarlberg, Österreich</p>
+  <div class="footer-links">
+    <a href="#">Datenschutz</a>
+    <a href="#">Impressum</a>
+    <a href="#">AGB</a>
+    <a href="mailto:hello@nearcare.at">Kontakt</a>
+  </div>
+</footer>
+
+<script>
+  // Tab switching
+  function switchTab(type, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('steps-heim').style.display = type === 'heim' ? 'grid' : 'none';
+    document.getElementById('steps-helfer').style.display = type === 'helfer' ? 'grid' : 'none';
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit
+  document.querySelectorAll('.btn-form').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.form-card');
+      const inputs = card.querySelectorAll('input, select');
+      let filled = true;
+      inputs.forEach(input => {
+        if (!input.value) filled = false;
+      });
+      if (!filled) {
+        btn.textContent = 'Bitte alle Felder ausfüllen';
+        btn.style.background = '#E74C3C';
+        setTimeout(() => {
+          btn.textContent = btn.closest('.form-card.heim') ? 'Kostenlos anmelden →' : 'Jetzt bewerben →';
+          btn.style.background = '';
+        }, 2000);
+        return;
+      }
+      btn.textContent = '✓ Erfolgreich gesendet!';
+      btn.style.background = '#27AE60';
+      setTimeout(() => {
+        btn.textContent = btn.closest('.form-card.heim') ? 'Kostenlos anmelden →' : 'Jetzt bewerben →';
+        btn.style.background = '';
+      }, 3000);
+    });
+  });
+</script>
+</body>
+</html>
