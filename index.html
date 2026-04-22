@@ -326,15 +326,26 @@
 
   .floating-badge {
     position: absolute;
-    bottom: -1rem;
-    right: -1rem;
+    bottom: -1.2rem;
+    right: -1.2rem;
+    width: 88px;
+    height: 88px;
     background: var(--navy);
     color: var(--white);
-    padding: 0.8rem 1.2rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    box-shadow: 0 8px 24px rgba(13,31,45,0.2);
+    border-radius: 50%;
+    border: 2px dashed rgba(255,255,255,0.4);
+    outline: 3px solid var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    transform: rotate(-12deg);
+    box-shadow: 0 8px 24px rgba(13,31,45,0.25);
+    text-transform: uppercase;
   }
 
   .floating-badge span {
@@ -986,12 +997,20 @@
     #helfer [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo" style="text-decoration: none;">Near<span>Care</span></a>
+  <a href="#" style="text-decoration: none; display: flex; align-items: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 70" width="180" height="48">
+      <text x="8" y="46" font-family="'Playfair Display', Georgia, serif" font-size="38" font-weight="700" letter-spacing="-1">
+        <tspan fill="#0D1F2D">Near</tspan><tspan fill="#C45E3E">Care</tspan>
+      </text>
+      <text x="9" y="64" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="400" fill="#6B7280" letter-spacing="1.5">NÄHE DIE ZÄHLT</text>
+    </svg>
+  </a>
   <ul class="nav-links">
     <li><a href="#how">Wie es funktioniert</a></li>
     <li><a href="#heim">Tätigkeiten</a></li>
@@ -1054,7 +1073,7 @@
       </div>
     </div>
     <div class="floating-badge">
-      Einfach. Fair. Lokal.
+      Einfach<br>Fair<br>Lokal
     </div>
   </div>
 </section>
@@ -1258,44 +1277,69 @@
       </form></div>
 
       <!-- HELFER FORM -->
-      <div class="form-card helfer reveal"><form action="https://formspree.io/f/xgorloyz" method="POST">
-        <div class="form-card-tag">🎓 Für Schüler & Studenten</div>
-        <h3>Als Helfer bewerben</h3>
-        <p>Verdiene flexibel neben Schule oder Studium und tue dabei Gutes.</p>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Vorname</label>
-            <input type="text" name="vorname" placeholder="Dein Vorname">
+      <div class="form-card helfer reveal">
+        <!-- Schritt 1: Formular -->
+        <div id="helfer-step1">
+          <div class="form-card-tag">🎓 Für Schüler & Studenten</div>
+          <h3>Als Helfer bewerben</h3>
+          <p>Verdiene flexibel neben Schule oder Studium und tue dabei Gutes.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Vorname</label>
+              <input type="text" id="h-vorname" placeholder="Dein Vorname">
+            </div>
+            <div class="form-group">
+              <label>Nachname</label>
+              <input type="text" id="h-nachname" placeholder="Dein Nachname">
+            </div>
           </div>
           <div class="form-group">
-            <label>Nachname</label>
-            <input type="text" name="nachname" placeholder="Dein Nachname">
+            <label>E-Mail Adresse</label>
+            <input type="email" id="h-email" placeholder="name@beispiel.at">
           </div>
+          <div class="form-group">
+            <label>Telefonnummer</label>
+            <input type="tel" id="h-telefon" placeholder="+43 ...">
+          </div>
+          <div class="form-group">
+            <label>Ich bin...</label>
+            <select id="h-status">
+              <option value="">Bitte auswählen</option>
+              <option>Schüler/in</option>
+              <option>Student/in</option>
+              <option>Anderes</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Wohnort</label>
+            <input type="text" id="h-wohnort" placeholder="z.B. Bregenz">
+          </div>
+          <button type="button" class="btn-form" id="helfer-send-code-btn" onclick="helferSendCode()">Jetzt bewerben →</button>
+          <p class="form-note">100% kostenlos · Kein Risiko · Jederzeit abmeldbar</p>
         </div>
-        <div class="form-group">
-          <label>E-Mail Adresse</label>
-          <input type="email" name="email" placeholder="name@beispiel.at">
+
+        <!-- Schritt 2: Code eingeben -->
+        <div id="helfer-step2" style="display:none;">
+          <div class="form-card-tag">✉️ E-Mail bestätigen</div>
+          <h3>Code eingeben</h3>
+          <p id="helfer-code-hint" style="margin-bottom:1.5rem;"></p>
+          <div class="form-group">
+            <label>6-stelliger Code</label>
+            <input type="text" id="h-code" placeholder="z.B. 483921" maxlength="6" style="font-size:1.3rem; letter-spacing:0.3em; text-align:center;">
+          </div>
+          <button type="button" class="btn-form" id="helfer-verify-btn" onclick="helferVerifyCode()">Bestätigen →</button>
+          <p style="font-size:0.8rem; color:var(--gray); margin-top:1rem; text-align:center;">
+            Kein Code erhalten? <span style="cursor:pointer; text-decoration:underline;" onclick="helferSendCode(true)">Erneut senden</span>
+          </p>
         </div>
-        <div class="form-group">
-          <label>Telefonnummer</label>
-          <input type="tel" name="telefon" placeholder="+43 ...">
+
+        <!-- Schritt 3: Erfolg -->
+        <div id="helfer-step3" style="display:none; text-align:center; padding: 2rem 0;">
+          <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+          <h3>Bewerbung eingegangen!</h3>
+          <p style="color:var(--gray);">Wir melden uns bald bei dir. Danke, dass du Teil von NearCare werden willst.</p>
         </div>
-        <div class="form-group">
-          <label>Ich bin...</label>
-          <select name="status">
-            <option value="">Bitte auswählen</option>
-            <option>Schüler/in</option>
-            <option>Student/in</option>
-            <option>Anderes</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Wohnort</label>
-          <input type="text" name="wohnort" placeholder="z.B. Bregenz">
-        </div>
-        <button type="submit" class="btn-form">Jetzt bewerben →</button>
-        <p class="form-note">100% kostenlos · Kein Risiko · Jederzeit abmeldbar</p>
-      </form></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1311,14 +1355,118 @@
   </div>
 </section>
 
+<!-- IMPRESSUM MODAL -->
+<div id="impressum-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
+  <div style="max-width:680px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
+    <button onclick="document.getElementById('impressum-modal').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
+    <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Impressum</h2>
+    <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Angaben gemäß § 5 ECG</p>
+
+    <div style="line-height:1.9; color:#2D3748; font-size:0.92rem;">
+
+      <h3 style="margin:1.5rem 0 0.5rem;">Betreiber</h3>
+      <p>Elias Pfister & Luca Marinelli<br>
+      Kochabühel 6<br>
+      6822 Satteins<br>
+      Vorarlberg, Österreich</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">Kontakt</h3>
+      <p>E-Mail: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a><br>
+      Website: nearcare.at</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">Tätigkeit</h3>
+      <p>NearCare betreibt eine digitale Vermittlungsplattform, die Altersheime, Pflegeeinrichtungen und Privatpersonen mit Schülern und Studenten aus Vorarlberg verbindet. Die Plattform ermöglicht die Vermittlung von nicht-medizinischen Betreuungstätigkeiten wie Gesellschaft leisten, Freizeitgestaltung und Alltagsunterstützung. NearCare ist ausschließlich technischer Dienstleister und tritt nicht als Arbeitgeber auf.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">Haftungsausschluss</h3>
+      <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- AGB MODAL -->
+<div id="agb-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
+  <div style="max-width:780px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
+    <button onclick="document.getElementById('agb-modal').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
+    <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Allgemeine Geschäftsbedingungen</h2>
+    <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Stand: April 2025 | Version 1.0</p>
+
+    <div style="line-height:1.8; color:#2D3748; font-size:0.92rem;">
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 1 Geltungsbereich</h3>
+      <p>§ 1.1. Diese Allgemeinen Geschäftsbedingungen gelten für alle Rechtsgeschäfte zwischen der NearCare, betrieben von Elias Pfister und Luca Marinelli, mit Sitz in Vorarlberg, Österreich, und den Nutzern der Plattform nearcare.at.</p>
+      <p>§ 1.2. NearCare betreibt eine digitale Vermittlungsplattform, die als technischer Dienstleister ausschließlich die Infrastruktur zur Verfügung stellt, über die Einrichtungen und Privatpersonen ("Auftraggeber") mit Helfern ("Helfer") in Kontakt treten können. NearCare ist weder Arbeitgeber noch Arbeitskräfteüberlasser und wird nicht als Vermittler oder Vertreter einer der Parteien tätig.</p>
+      <p>§ 1.3. NearCare behält sich das Recht vor, diese AGB jederzeit zu ändern. Änderungen werden den Nutzern rechtzeitig per E-Mail mitgeteilt. Die weitere Nutzung der Plattform nach Inkrafttreten der Änderungen gilt als Zustimmung.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 2 Leistungsgegenstand</h3>
+      <p>§ 2.1. NearCare stellt eine digitale Plattform bereit, auf der Auftraggeber Betreuungseinsätze für nicht-medizinische Tätigkeiten inserieren können und Helfer sich für diese Einsätze bewerben können.</p>
+      <p>§ 2.2. Der Leistungsgegenstand von NearCare beschränkt sich ausschließlich auf die Bereitstellung der technischen Plattform-Infrastruktur. NearCare übernimmt keine Verantwortung für die tatsächliche Durchführung von Einsätzen, die Qualität der erbrachten Leistungen oder die Zahlungsabwicklung zwischen Auftraggebern und Helfern.</p>
+      <p>§ 2.3. Vermittelte Tätigkeiten umfassen ausschließlich nicht-medizinische Betreuungsleistungen wie Spaziergänge, Gesellschaft leisten, Freizeitgestaltung, Alltagsarbeiten und Mahlzeitenbegleitung. Medizinische oder pflegerische Tätigkeiten sind ausdrücklich ausgeschlossen.</p>
+      <p>§ 2.4. NearCare behält sich das Recht vor, die Plattform jederzeit zu modifizieren, einzustellen oder weiterzuentwickeln.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 3 Registrierung & Nutzung</h3>
+      <p>§ 3.1. Die Nutzung der Plattform setzt eine Registrierung voraus. Die Registrierung ist natürlichen Personen ab 16 Jahren sowie juristischen Personen gestattet.</p>
+      <p>§ 3.2. Der Nutzer verpflichtet sich zur wahrheitsgemäßen und vollständigen Angabe seiner Daten bei der Registrierung. Falsche Angaben berechtigen NearCare zur sofortigen Sperrung des Accounts.</p>
+      <p>§ 3.3. Der Nutzer ist verantwortlich für die Sicherheit seiner Zugangsdaten und haftet für alle Aktivitäten, die unter seinem Account vorgenommen werden.</p>
+      <p>§ 3.4. Ein Account ist nicht übertragbar. Je natürlicher oder juristischer Person ist nur ein Account gestattet.</p>
+      <p>§ 3.5. Jeder Helfer durchläuft vor der Freischaltung seines Accounts ein persönliches Onboarding-Gespräch mit dem NearCare Team – wahlweise persönlich oder per Videocall (z.B. Microsoft Teams). NearCare behält sich das Recht vor, die Freischaltung ohne Angabe von Gründen zu verweigern. Ziel des Gesprächs ist die persönliche Kennenlernung sowie die Sicherstellung der Eignung des Helfers für Betreuungseinsätze.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 4 Verhältnis zwischen Auftraggeber und Helfer</h3>
+      <p>§ 4.1. NearCare ist ausschließlich technischer Dienstleister. Alle Verträge über Betreuungseinsätze kommen ausschließlich zwischen dem Auftraggeber und dem Helfer zustande. NearCare ist an diesen Verträgen nicht beteiligt.</p>
+      <p>§ 4.2. Der Auftraggeber ist verantwortlich für die ordnungsgemäße Abwicklung des Einsatzes, insbesondere für die Einhaltung aller arbeitsrechtlichen, sozialversicherungsrechtlichen und steuerrechtlichen Vorschriften.</p>
+      <p>§ 4.3. Der Helfer ist für die korrekte steuerliche und sozialversicherungsrechtliche Behandlung seiner Einkünfte selbst verantwortlich. NearCare übernimmt keine Personalverrechnung und ist nicht Arbeitgeber der Helfer.</p>
+      <p>§ 4.4. Die Bezahlung des Helfers erfolgt direkt durch den Auftraggeber. NearCare ist nicht an der Zahlungsabwicklung beteiligt und übernimmt keine Haftung für ausbleibende Zahlungen.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 5 Preise & Abonnement</h3>
+      <p>§ 5.1. Die Nutzung der Plattform durch Helfer ist kostenlos.</p>
+      <p>§ 5.2. Für Auftraggeber fällt eine monatliche Abonnementgebühr gemäß dem zum Zeitpunkt des Vertragsschlusses gültigen Preisblatt an.</p>
+      <p>§ 5.3. Preisanpassungen werden dem Nutzer mindestens 4 Wochen vor Inkrafttreten per E-Mail mitgeteilt. Der Nutzer hat in diesem Fall das Recht zur außerordentlichen Kündigung.</p>
+      <p>§ 5.4. Alle Preise verstehen sich zuzüglich der gesetzlichen Umsatzsteuer.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 6 Haftung</h3>
+      <p>§ 6.1. NearCare haftet nicht für Schäden, die im Rahmen von über die Plattform vermittelten Einsätzen entstehen. Die Haftung für die Durchführung der Einsätze liegt ausschließlich beim Auftraggeber und dem Helfer.</p>
+      <p>§ 6.2. NearCare haftet nicht für die Richtigkeit, Vollständigkeit oder Aktualität der von Nutzern eingestellten Inhalte.</p>
+      <p>§ 6.3. NearCare ist gemäß § 18 Abs. 1 ECG nicht verpflichtet, übermittelte oder gespeicherte Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+      <p>§ 6.4. Eine Haftung von NearCare ist, mit Ausnahme von vorsätzlich oder grob fahrlässig verursachten Schäden sowie Personenschäden, ausgeschlossen.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 7 Datenschutz</h3>
+      <p>§ 7.1. Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung von NearCare und in Übereinstimmung mit der DSGVO sowie dem DSG.</p>
+      <p>§ 7.2. Nutzerdaten werden ausschließlich für den Betrieb der Plattform und die Vermittlung von Einsätzen verwendet. Eine Weitergabe an Dritte erfolgt nicht ohne ausdrückliche Einwilligung des Nutzers.</p>
+      <p>§ 7.3. Nutzer haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung ihrer personenbezogenen Daten. Anfragen sind an <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a> zu richten.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 8 Sperrung & Kündigung</h3>
+      <p>§ 8.1. NearCare behält sich das Recht vor, Nutzer bei Verstößen gegen diese AGB oder bei missbräuchlicher Nutzung der Plattform ohne Vorankündigung zu sperren.</p>
+      <p>§ 8.2. Nutzer können ihr Konto jederzeit ohne Angabe von Gründen kündigen. Die Kündigung ist per E-Mail an <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a> zu richten.</p>
+      <p>§ 8.3. NearCare kann Abonnementverträge mit einer Frist von 4 Wochen zum Monatsende kündigen.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 9 Verantwortlichkeit für Inhalte</h3>
+      <p>§ 9.1. Nutzer sind für die von ihnen eingestellten Inhalte vollständig selbst verantwortlich. NearCare übernimmt keine Haftung für die Rechtmäßigkeit oder Richtigkeit nutzergenerierter Inhalte.</p>
+      <p>§ 9.2. Nutzer verpflichten sich, keine rechtswidrigen, diskriminierenden, irreführenden oder anderweitig unzulässigen Inhalte auf der Plattform einzustellen.</p>
+      <p>§ 9.3. NearCare ist berechtigt, Inhalte, die gegen diese AGB oder geltendes Recht verstoßen, ohne Vorankündigung zu entfernen.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">§ 10 Schlussbestimmungen</h3>
+      <p>§ 10.1. Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.</p>
+      <p>§ 10.2. Erfüllungsort und Gerichtsstand ist Vorarlberg, Österreich.</p>
+      <p>§ 10.3. Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
+      <p>§ 10.4. Änderungen und Ergänzungen dieser AGB bedürfen der Schriftform.</p>
+
+      <h3 style="margin:1.5rem 0 0.5rem;">Kontakt</h3>
+      <p>NearCare · Elias Pfister & Luca Marinelli<br>Vorarlberg, Österreich<br>
+      E-Mail: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a><br>
+      Website: nearcare.at</p>
+
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="logo">Near<span>Care</span></div>
   <p>© 2025 NearCare · Vorarlberg, Österreich · Nähe die zählt</p>
   <div class="footer-links">
     <a href="#">Datenschutz</a>
-    <a href="#">Impressum</a>
-    <a href="#">AGB</a>
+    <a href="#" onclick="document.getElementById('impressum-modal').style.display='block'; return false;">Impressum</a>
+    <a href="#" onclick="document.getElementById('agb-modal').style.display='block'; return false;">AGB</a>
     <a href="mailto:nearcare.office@gmail.com">Kontakt</a>
   </div>
 </footer>
@@ -1343,31 +1491,118 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Form submit
-  document.querySelectorAll('.btn-form').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.form-card');
-      const inputs = card.querySelectorAll('input, select');
-      let filled = true;
-      inputs.forEach(input => {
-        if (!input.value) filled = false;
+  // ── EMAILJS CONFIG ──────────────────────────────────────────
+  const EMAILJS_PUBLIC_KEY     = '0AbG1BR3yD0buuHum';
+  const EMAILJS_SERVICE_ID     = 'service_6sgu2so';
+  const EMAILJS_CODE_TEMPLATE  = 'template_1iodh3m';
+  const EMAILJS_REG_TEMPLATE   = 'template_mq0yhqj';
+  // ────────────────────────────────────────────────────────────
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  function helferSetBtn(btn, text, color) {
+    btn.textContent = text;
+    btn.style.background = color || '';
+    btn.disabled = !!color;
+  }
+
+  async function helferSendCode(resend = false) {
+    const vorname  = document.getElementById('h-vorname').value.trim();
+    const nachname = document.getElementById('h-nachname').value.trim();
+    const email    = document.getElementById('h-email').value.trim();
+    const telefon  = document.getElementById('h-telefon').value.trim();
+    const status   = document.getElementById('h-status').value;
+    const wohnort  = document.getElementById('h-wohnort').value.trim();
+    const btn      = document.getElementById('helfer-send-code-btn');
+
+    if (!resend && (!vorname || !nachname || !email || !telefon || !status || !wohnort)) {
+      helferSetBtn(btn, 'Bitte alle Felder ausfüllen', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+      return;
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    sessionStorage.setItem('nearcare_code', code);
+    sessionStorage.setItem('nearcare_code_exp', Date.now() + 10 * 60 * 1000);
+    sessionStorage.setItem('nearcare_data', JSON.stringify({ vorname, nachname, email, telefon, status, wohnort }));
+
+    if (!resend) helferSetBtn(btn, 'Sende Code...', '#888');
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CODE_TEMPLATE, {
+        to_email: email,
+        to_name: vorname,
+        passcode: code
       });
-      if (!filled) {
-        btn.textContent = 'Bitte alle Felder ausfüllen';
-        btn.style.background = '#E74C3C';
-        setTimeout(() => {
-          btn.textContent = btn.closest('.form-card.heim') ? 'Kostenlos anmelden →' : 'Jetzt bewerben →';
-          btn.style.background = '';
-        }, 2000);
-        return;
-      }
-      btn.textContent = '✓ Erfolgreich gesendet!';
-      btn.style.background = '#27AE60';
-      setTimeout(() => {
-        btn.textContent = btn.closest('.form-card.heim') ? 'Kostenlos anmelden →' : 'Jetzt bewerben →';
-        btn.style.background = '';
-      }, 3000);
-    });
+
+      document.getElementById('helfer-step1').style.display = 'none';
+      document.getElementById('helfer-step2').style.display = 'block';
+      document.getElementById('helfer-code-hint').textContent =
+        `Wir haben einen 6-stelligen Code an ${email} geschickt. Bitte gib ihn hier ein um deine Adresse zu bestätigen.`;
+    } catch (e) {
+      helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 3000);
+    }
+  }
+
+  async function helferVerifyCode() {
+    const entered = document.getElementById('h-code').value.trim();
+    const saved   = sessionStorage.getItem('nearcare_code');
+    const exp     = parseInt(sessionStorage.getItem('nearcare_code_exp') || '0');
+    const btn     = document.getElementById('helfer-verify-btn');
+
+    if (Date.now() > exp) {
+      btn.textContent = 'Code abgelaufen – bitte neu anfordern';
+      btn.style.background = '#E74C3C';
+      setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 3000);
+      return;
+    }
+
+    if (entered !== saved) {
+      btn.textContent = 'Falscher Code – nochmal versuchen';
+      btn.style.background = '#E74C3C';
+      setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 2500);
+      return;
+    }
+
+    helferSetBtn(btn, 'Wird gesendet...', '#888');
+    const d = JSON.parse(sessionStorage.getItem('nearcare_data') || '{}');
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_REG_TEMPLATE, {
+        vorname:  d.vorname,
+        nachname: d.nachname,
+        email:    d.email,
+        telefon:  d.telefon,
+        status:   d.status,
+        wohnort:  d.wohnort
+      });
+
+      sessionStorage.removeItem('nearcare_code');
+      sessionStorage.removeItem('nearcare_code_exp');
+      sessionStorage.removeItem('nearcare_data');
+
+      document.getElementById('helfer-step2').style.display = 'none';
+      document.getElementById('helfer-step3').style.display = 'block';
+    } catch (e) {
+      helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Bestätigen →'), 3000);
+    }
+  }
+
+  // Heim-Formular (Formspree, unveränderter Flow)
+  document.querySelector('.form-card.heim .btn-form').addEventListener('click', function() {
+    const btn = this;
+    const inputs = btn.closest('.form-card').querySelectorAll('input, select');
+    let filled = true;
+    inputs.forEach(i => { if (!i.value) filled = false; });
+    if (!filled) {
+      btn.textContent = 'Bitte alle Felder ausfüllen';
+      btn.style.background = '#E74C3C';
+      setTimeout(() => { btn.textContent = 'Kostenlos anmelden →'; btn.style.background = ''; }, 2000);
+      return;
+    }
+    btn.closest('form').submit();
   });
 </script>
 </body>
