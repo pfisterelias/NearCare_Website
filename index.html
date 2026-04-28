@@ -453,6 +453,18 @@
 
   .step-card:hover { transform: translateY(-4px); }
 
+  .helfer-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .helfer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(13,31,45,0.08);
+  }
+
   .step-card::after {
     content: attr(data-step);
     position: absolute;
@@ -1188,17 +1200,17 @@
       <p class="section-sub" style="max-width: 600px; margin: 0 auto;">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
     </div>
     <div class="reveal" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+      <div class="helfer-card">
         <div style="font-size: 2rem; margin-bottom: 1rem;">💶</div>
         <h4 style="margin-bottom: 0.5rem;">Fairer Lohn</h4>
         <p style="font-size: 0.9rem; color: var(--gray);">Du bekommst deinen Lohn direkt – geringfügig, ohne Abzüge, ohne Umwege.</p>
       </div>
-      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+      <div class="helfer-card">
         <div style="font-size: 2rem; margin-bottom: 1rem;">📅</div>
         <h4 style="margin-bottom: 0.5rem;">Dein Rhythmus</h4>
         <p style="font-size: 0.9rem; color: var(--gray);">Du entscheidest, wann du Zeit hast – ob einmal die Woche oder öfter.</p>
       </div>
-      <div style="background: var(--cream); border-radius: 16px; padding: 2rem;">
+      <div class="helfer-card">
         <div style="font-size: 2rem; margin-bottom: 1rem;">⭐</div>
         <h4 style="margin-bottom: 0.5rem;">Dein Einsatz zählt</h4>
         <p style="font-size: 0.9rem; color: var(--gray);">Gute Einsätze sprechen sich rum – dein Ruf und deine Chancen wachsen mit der Zeit.</p>
