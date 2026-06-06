@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="180" viewBox="0 0 600 180" role="img" aria-label="NearCare – Nähe die zählt">
+  <title>NearCare logo</title>
+  <!-- Transparent background: no fill rect, so the logo can be placed on any color -->
+  <!-- Wordmark: "Near" Navy (#0D1F2D) + "Care" Terra (#C45E3E), Playfair Display Bold -->
+  <text x="300" y="105" text-anchor="middle"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="96" font-weight="700" letter-spacing="-2">
+    <tspan fill="#0D1F2D">Near</tspan><tspan fill="#C45E3E">Care</tspan>
+  </text>
+  <!-- Tagline: "NÄHE DIE ZÄHLT", Grau (#6B7280), DM Sans Regular, letter-spaced -->
+  <text x="300" y="150" text-anchor="middle"
+        font-family="'DM Sans', Arial, sans-serif"
+        font-size="22" font-weight="400" letter-spacing="6" fill="#6B7280">NÄHE DIE ZÄHLT</text>
+</svg>
