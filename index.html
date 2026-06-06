@@ -365,6 +365,13 @@
     border-top: none;
   }
 
+  .how, #heim, #helfer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .section-tag {
     display: inline-block;
     font-size: 0.75rem;
@@ -1122,7 +1129,7 @@
 </section>
 
 <!-- ÜBER UNS -->
-<section style="background: var(--cream);">
+<section class="quote-section" style="background: var(--cream);">
   <div style="max-width: 780px; margin: 0 auto; text-align: center;" class="reveal">
     <div class="section-tag">Warum NearCare?</div>
     <blockquote style="font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 400; color: var(--navy); line-height: 1.75; font-style: italic; margin: 1.5rem 0;">
