@@ -24,7 +24,7 @@
 
   body {
     font-family: 'DM Sans', sans-serif;
-    background: var(--cream);
+    background: var(--white);
     color: var(--navy);
     overflow-x: hidden;
   }
@@ -34,7 +34,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.2rem 5%;
-    background: rgba(248,245,239,0.92);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(0,0,0,0.06);
     transition: all 0.3s;
@@ -358,6 +358,11 @@
   /* ── SECTION BASE ── */
   section {
     padding: 6rem 5%;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero, .pricing, .cta-section {
+    border-top: none;
   }
 
   .section-tag {
@@ -443,26 +448,32 @@
   }
 
   .step-card {
-    background: var(--cream);
-    border-radius: 16px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-  }
-
-  .step-card:hover { transform: translateY(-4px); }
-
-  .helfer-card {
-    background: var(--cream);
+    background: var(--white);
     border-radius: 16px;
     padding: 2rem;
     border: 1px solid var(--border);
-    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .step-card:hover {
+    border-color: var(--terra);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
+  }
+
+  .helfer-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
   }
   .helfer-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(13,31,45,0.08);
+    border-color: var(--terra);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
   }
 
   .step-card::after {
@@ -479,13 +490,9 @@
   }
 
   .step-icon {
-    width: 52px; height: 52px;
-    background: var(--white);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
     color: var(--terra);
-    margin-bottom: 1.2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    margin-bottom: 1rem;
+    line-height: 0;
   }
 
   .step-card h3 {
@@ -839,7 +846,7 @@
 
   /* ── REGISTRATION FORMS ── */
   .register {
-    background: var(--cream);
+    background: var(--white);
   }
 
   .register-inner {
@@ -1159,7 +1166,7 @@
 </section>
 
 <!-- FOR HELFER -->
-<section id="helfer" style="background: var(--cream);">
+<section id="helfer" style="background: var(--white);">
   <div style="max-width: 1100px; margin: 0 auto; padding: 0 2rem;">
     <div class="reveal" style="text-align: center; margin-bottom: 3rem;">
       <div class="section-tag">Für Helfer</div>
