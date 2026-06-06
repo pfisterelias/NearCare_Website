@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F8F5EF"/>
+  <rect x="0" y="0" width="1200" height="12" fill="#C45E3E"/>
+  <rect x="0" y="618" width="1200" height="12" fill="#C45E3E"/>
+  <text x="600" y="335" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="150" font-weight="700" letter-spacing="-3">
+    <tspan fill="#0D1F2D">Near</tspan><tspan fill="#C45E3E">Care</tspan>
+  </text>
+  <text x="600" y="415" text-anchor="middle" font-family="'DM Sans', Arial, sans-serif" font-size="40" font-weight="400" letter-spacing="8" fill="#6B7280">NÄHE DIE ZÄHLT</text>
+</svg>
