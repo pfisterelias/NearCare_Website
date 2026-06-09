@@ -89,6 +89,16 @@
 
   .nav-cta:hover { background: var(--terra-light) !important; }
 
+  .nav-burger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--navy);
+    padding: 0.3rem;
+    line-height: 0;
+  }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -221,7 +231,7 @@
     animation: fadeUp 0.6s ease 0.4s both;
   }
 
-  .stat-item {}
+  .stat-item { flex-shrink: 0; }
 
   .stat-num {
     font-family: 'Playfair Display', serif;
@@ -1039,8 +1049,41 @@
     .pricing-grid { grid-template-columns: 1fr; }
     .categories-grid { grid-template-columns: repeat(2, 1fr); }
     .register-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
     #helfer [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+
+    .nav-burger { display: flex; align-items: center; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0; right: 0;
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(12px);
+      flex-direction: column;
+      padding: 0.5rem 5% 1.5rem;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.open { display: flex; }
+
+    .nav-links li { border-bottom: 1px solid var(--border); }
+    .nav-links li:last-child { border-bottom: none; padding-top: 0.75rem; }
+
+    .nav-links a {
+      display: block;
+      padding: 1rem 0;
+      font-size: 1rem;
+      opacity: 1;
+    }
+
+    .nav-links .nav-cta {
+      display: block;
+      text-align: center;
+      padding: 0.85rem 1.5rem;
+    }
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -1057,12 +1100,17 @@
       <text x="9" y="64" font-family="'DM Sans', Arial, sans-serif" font-size="11" font-weight="400" fill="#6B7280" letter-spacing="1.5">NÄHE DIE ZÄHLT</text>
     </svg>
   </a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="#how">Wie es funktioniert</a></li>
     <li><a href="#heim">Tätigkeiten</a></li>
     <li><a href="#preise">Preise</a></li>
     <li><a href="#register" class="nav-cta">Jetzt starten</a></li>
   </ul>
+  <button class="nav-burger" id="nav-burger" aria-label="Menü öffnen">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1538,6 +1586,24 @@
 </footer>
 
 <script>
+  // Mobile nav
+  const navBurger = document.getElementById('nav-burger');
+  const navLinks = document.getElementById('nav-links');
+  const burgerIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  navBurger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navBurger.innerHTML = isOpen ? closeIcon : burgerIcon;
+    navBurger.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+  });
+  document.querySelectorAll('#nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navBurger.innerHTML = burgerIcon;
+      navBurger.setAttribute('aria-label', 'Menü öffnen');
+    });
+  });
+
   // Tab switching
   function switchTab(type, btn) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
