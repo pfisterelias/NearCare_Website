@@ -485,7 +485,7 @@
     transition: all 0.3s;
   }
 
-  .step-card:hover, .step-card:active {
+  .step-card:hover, .step-card:active, .step-card.touched {
     border-color: var(--terra);
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(196,94,62,0.1);
@@ -499,7 +499,7 @@
     border: 1px solid var(--border);
     transition: all 0.3s;
   }
-  .helfer-card:hover, .helfer-card:active {
+  .helfer-card:hover, .helfer-card:active, .helfer-card.touched {
     border-color: var(--terra);
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(196,94,62,0.1);
@@ -759,7 +759,7 @@
     justify-content: center;
   }
 
-  .cat-card:hover, .cat-card:active {
+  .cat-card:hover, .cat-card:active, .cat-card.touched {
     border-color: var(--terra);
     transform: translateY(-3px);
     box-shadow: 0 8px 24px rgba(196,94,62,0.1);
@@ -1613,6 +1613,19 @@
 </footer>
 
 <script>
+  // Touch-Feedback für Karten
+  const touchCards = document.querySelectorAll('.cat-card, .helfer-card, .step-card');
+  touchCards.forEach(card => {
+    card.addEventListener('touchstart', () => card.classList.add('touched'), { passive: true });
+    card.addEventListener('touchend', () => setTimeout(() => card.classList.remove('touched'), 250), { passive: true });
+    card.addEventListener('touchcancel', () => card.classList.remove('touched'), { passive: true });
+  });
+  document.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY)?.closest('.cat-card, .helfer-card, .step-card');
+    touchCards.forEach(c => c.classList.toggle('touched', c === el));
+  }, { passive: true });
+
   // Mobile nav
   const navBurger = document.getElementById('nav-burger');
   const navLinks = document.getElementById('nav-links');
