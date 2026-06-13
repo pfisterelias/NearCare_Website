@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nearcare.at/sitemap.xml
