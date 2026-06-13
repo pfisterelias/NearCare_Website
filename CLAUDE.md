@@ -6,6 +6,8 @@ NearCare ist eine statische Marketing-Website für eine Vermittlungsplattform, d
 Studenten mit Altersheimen und Privatpersonen in Vorarlberg verbindet. Hosting: **GitHub Pages**
 unter der Domain **nearcare.at**.
 
+Entwicklertagebuch (pro Session): siehe [`CHANGELOG.md`](CHANGELOG.md)
+
 ## Technologiestack
 
 | Schicht       | Technologie                          |
@@ -13,8 +15,8 @@ unter der Domain **nearcare.at**.
 | Markup        | HTML5                                |
 | Styling       | CSS3 (keine Frameworks)              |
 | Interaktion   | Vanilla JavaScript (ES2020+)         |
-| E-Mail        | EmailJS SDK v4 (CDN)                 |
-| Formulare     | Formspree (Einrichtungsregistrierung)|
+| E-Mail        | EmailJS SDK v4 (CDN, SRI-gepinnt)    |
+| Formulare     | Formspree AJAX (Einrichtungsregistrierung)|
 | Hosting       | GitHub Pages                         |
 | Schriften     | Google Fonts (Playfair Display, DM Sans) |
 
@@ -23,10 +25,10 @@ unter der Domain **nearcare.at**.
 ```
 NearCare_Website/
 ├── css/
-│   ├── base.css          # CSS-Variablen, Reset, Typografie, Animationen
+│   ├── base.css          # CSS-Variablen, Reset, Typografie, Animationen, .hidden
 │   ├── layout.css        # Navigation, Footer, Abschnittsbasis
-│   ├── components.css    # Wiederverwendbare UI-Komponenten (Buttons, Karten, Tabs, Formulare)
-│   ├── sections.css      # Seitenbereichs-spezifische Stile (Hero, Pricing, CTA usw.)
+│   ├── components.css    # Wiederverwendbare UI-Komponenten (Buttons, Karten, Tabs, Formulare, Modals)
+│   ├── sections.css      # Seitenbereichs-spezifische Stile (Hero, Pricing, FAQ, CTA usw.)
 │   └── responsive.css    # Alle @media-Breakpoints (Mobile ≤ 768px)
 ├── js/
 │   ├── ui.js             # Navigation, Tabs, Modals, Scroll-Reveal, Touch-Feedback
@@ -36,7 +38,8 @@ NearCare_Website/
 ├── og-preview.png        # Social-Sharing-Bild (1200×630px)
 ├── og-preview.svg        # Vektor-Version des Previews
 ├── CNAME                 # nearcare.at (GitHub Pages Custom Domain)
-├── CLAUDE.md             # Diese Dokumentation
+├── CLAUDE.md             # Technische Referenzdokumentation (diese Datei)
+├── CHANGELOG.md          # Entwicklertagebuch (pro Session, neueste zuerst)
 └── index.html            # Einzige HTML-Seite (Single-Page-Website)
 ```
 
@@ -64,8 +67,8 @@ NearCare_Website/
 
 ### Helfer-Registrierung (3-Schritt-Prozess)
 
-1. **Schritt 1** – Daten eingeben (Vorname, Nachname, E-Mail, Telefon, Status, Wohnort)
-2. **Schritt 2** – E-Mail-Verifikation: 6-stelliger Code via **EmailJS**
+1. **Schritt 1** – Daten eingeben (Vorname, Nachname, E-Mail, Telefon, Status, Wohnort) + Altersbestätigung (16+)
+2. **Schritt 2** – E-Mail-Verifikation: 6-stelliger Code via **EmailJS** (10 min gültig, Countdown-Anzeige)
 3. **Schritt 3** – Erfolgsbestätigung
 
 EmailJS-Konfiguration in `js/forms.js`:
@@ -76,23 +79,29 @@ const EMAILJS_CODE_TEMPLATE = 'template_1iodh3m';   // Verifizierungscode
 const EMAILJS_REG_TEMPLATE  = 'template_mq0yhqj';   // Bewerbungsbestätigung
 ```
 
-### Einrichtungsregistrierung (Formspree)
+> **Wichtig:** Im EmailJS-Dashboard unter Account → Security → Allowed Origins den Origin
+> `https://nearcare.at` eintragen, um den Public Key vor Missbrauch auf fremden Domains zu schützen.
 
-Direktes HTML-Formular an `https://formspree.io/f/xzdyadge`.
-Keine JavaScript-Integration nötig – Formspree verarbeitet die Daten.
+### Einrichtungsregistrierung (Formspree AJAX)
+
+Formular `#heim-form` posted per `fetch()` an `https://formspree.io/f/xzdyadge` mit
+`Accept: application/json`-Header. Erfolgsbestätigung via `#heim-step2` (kein Redirect).
 
 ## Sicherheitsmaßnahmen
 
 | Maßnahme                  | Implementierung                                    |
 |---------------------------|----------------------------------------------------|
-| Content Security Policy   | `<meta http-equiv="CSP">` in `index.html`          |
+| Content Security Policy   | `<meta http-equiv="CSP">` – kein `unsafe-inline`   |
+| Subresource Integrity     | EmailJS CDN v4.4.1 mit SHA-384-Hash gepinnt        |
 | Kryptografischer Zufall   | `crypto.getRandomValues()` statt `Math.random()`   |
 | Input-Sanitisierung       | `sanitize()` in `js/forms.js` vor EmailJS-Versand  |
 | E-Mail-Validierung        | Regex-Prüfung in `js/forms.js`                     |
 | Telefon-Validierung       | Regex-Prüfung in `js/forms.js`                     |
 | Rate-Limiting             | 60s Cooldown (sessionStorage) für Code-Versendungen|
+| Brute-Force-Schutz        | Max. 5 Versuche (`MAX_CODE_ATTEMPTS`) pro Code     |
 | Honeypot-Felder           | `.form-honeypot` in beiden Formularen              |
 | HTML required + maxlength | Auf allen Formularfeldern gesetzt                  |
+| Altersverifikation        | Pflicht-Checkbox (16+) vor Helfer-Bewerbung        |
 | Keine inline Scripts      | Alle Handler in externen JS-Dateien                |
 | Externe Links             | `rel="noopener noreferrer"` auf allen target=_blank|
 | HTTPS                     | Automatisch durch GitHub Pages                     |
@@ -112,6 +121,15 @@ In `index.html`, Abschnitt `<section class="hero">`:
 ```html
 <div class="stat-num">47</div>
 <div class="stat-label">Altersheime...</div>
+```
+
+### FAQ-Fragen bearbeiten
+In `index.html`, Abschnitt `<section class="faq">`:
+```html
+<details class="faq-item">
+  <summary>Wie funktioniert die Vermittlung?</summary>
+  <p>Antworttext hier...</p>
+</details>
 ```
 
 ### Neue Farbe hinzufügen
@@ -155,136 +173,5 @@ Push auf `main` → GitHub Actions deployt automatisch auf GitHub Pages → near
 
 ## Kontakt
 
-**Elias Pfister & Luca Marinelli**
+**Elias Pfister & Nathan Pfister**
 nearcare.office@gmail.com · nearcare.at · Vorarlberg, Österreich
-
----
-
-## Entwicklertagebuch
-
-### 2026-06-13 – Vollständiges Refactoring & Sicherheitshärtung
-
-**Ausgangslage:** Die gesamte Website war in einer einzigen `index.html` (1782 Zeilen) untergebracht – CSS inline, JavaScript inline, alle Event-Handler als `onclick`-Attribute.
-
-#### Was wurde gemacht?
-
-**1. CSS-Schichtenmodell eingeführt** (`refactor/project-structure`)
-
-Die ~600 Zeilen Inline-CSS wurden in 5 separate Dateien aufgeteilt:
-
-| Datei | Inhalt |
-|---|---|
-| `css/base.css` | CSS-Variablen, Reset, Typografie, Animationen (`fadeUp`, `fadeIn`) |
-| `css/layout.css` | Navigation, Footer, Abschnittsbasis |
-| `css/components.css` | Buttons, Badges, Karten, Tabs, Formulare |
-| `css/sections.css` | Hero, Quote, Helfer, Pricing, CTA, Register |
-| `css/responsive.css` | Alle Mobile-Breakpoints (`max-width: 768px`) |
-
-Dabei wurden auch bestehende Fehler behoben: Der `.helfer-grid`-Selector im Responsive-CSS verwendete den fragilen `[style*="grid-template-columns"]`-Hack; ersetzt durch eine saubere Klasse.
-
-**2. JavaScript modularisiert** (`refactor/project-structure`)
-
-Der Inline-Script-Block wurde in 2 Module aufgeteilt:
-- `js/ui.js` – Touch-Feedback, Burger-Nav, Tab-Umschaltung, Modals, Scroll-Reveal
-- `js/forms.js` – Helfer-Registrierungslogik, EmailJS-Integration, Heim-Formular
-
-**3. Sicherheitshärtung** (`feature/security-hardening`)
-
-Alle 10+ `onclick`-Attribute aus dem HTML entfernt. Stattdessen Event-Delegation via `data-tab`, `data-opens`, `.modal-close`.
-
-Eingebaute Schutzmaßnahmen:
-- **CSP-Header** via `<meta>`: Strikte `script-src`, kein `unsafe-inline` für Scripts
-- **`crypto.getRandomValues()`** statt `Math.random()` für Verifikationscodes
-- **`sanitize()`-Funktion**: HTML-Entity-Escaping vor EmailJS-Versand
-- **E-Mail & Telefon-Validierung** via Regex
-- **Rate-Limiting**: 60 Sekunden Cooldown zwischen Code-Versendungen (sessionStorage)
-- **Honeypot-Felder** in beiden Formularen (`.form-honeypot`)
-- **`required` + `maxlength`** auf allen Formularfeldern
-- **sessionStorage wird nach Verifikation vollständig geleert**
-
-**4. Bugfixes** (`fix/bruteforce-protection`)
-
-- **Brute-Force-Schutz**: `helferVerifyCode()` hatte kein Versuchslimit – ein Angreifer hätte alle 900.000 möglichen 6-stelligen Codes im 10-Minuten-Fenster ausprobieren können. Fix: Max. 5 Versuche (`MAX_CODE_ATTEMPTS`), danach Button deaktiviert.
-- **Rate-Limiting-Feedback im Schritt 2**: Bei `helferSendCode(true)` (Resend) wurde Feedback auf dem in Schritt 2 unsichtbaren `#helfer-send-code-btn` angezeigt. Fix: Separater Feedback-Pfad für den `#helfer-resend`-Span.
-- **Heim-Formular**: Von Click-Handler auf `submit`-Event-Listener umgestellt, um Doppelversand zu vermeiden.
-
-**5. Entwicklerdokumentation** (`feature/security-hardening`)
-
-`CLAUDE.md` neu erstellt mit vollständiger Projektdokumentation: Technologiestack, Dateistruktur, Designsystem, Formulare, Sicherheitsmaßnahmen, häufige Änderungen, Branch-Strategie.
-
-#### Git-Commits dieser Session
-
-```
-59b07d2  refactor: Monolithische index.html in Schichten aufgeteilt
-a34b44e  feat(security): Sicherheitshärtung & Entwicklerdokumentation
-d8cece3  merge: Projektstruktur-Refactoring in main übernommen
-08df445  merge: Sicherheitshärtung in main übernommen
-e5164ed  fix: Brute-Force-Schutz und Rate-Limiting-Feedback korrigiert
-a0efb79  merge: Brute-Force-Schutz in main übernommen
-```
-
-#### Offene Punkte / Hinweise
-
-- **EmailJS Allowed Origins** muss im EmailJS-Dashboard manuell auf `https://nearcare.at` gesetzt werden, um den Public Key vor Missbrauch auf fremden Domains zu schützen. (Dashboard → Account → Security → Allowed Origins)
-- Der Public Key im Code ist per Design öffentlich (Frontend-SDK) – die Allowed-Origins-Einschränkung ist die einzige serverseitige Absicherung.
-
----
-
-### 2026-06-13 – Bugfixes, Sicherheit & Code-Qualität (Session 2)
-
-**Ausgangslage:** Nach dem Refactoring blieben mehrere Bugs, Sicherheitslücken und Code-Qualitätsprobleme bestehen, die in dieser Session systematisch behoben wurden.
-
-#### Was wurde gemacht?
-
-**1. Bugfixes** (`fix/quick-wins`, `feat/heim-form-ajax`)
-
-- **OG-Image-URL**: Zeigte noch auf `pfisterelias.github.io/...` statt `https://nearcare.at/og-preview.png`. Beim Teilen des Links wurde das Vorschaubild nicht korrekt geladen.
-- **Heim-Formular Redirect**: Native Formular-Submission leitete Nutzer auf Formspree-Seite um – kein Feedback, kein Verbleib auf nearcare.at. Fix: Umstellung auf `fetch()` AJAX-POST mit `Accept: application/json`. Erfolgsbestätigung (Step 2) analog zum Helfer-Formular implementiert.
-
-**2. Sicherheitshärdung** (`fix/quick-wins`)
-
-- **Subresource Integrity (SRI)**: EmailJS-CDN auf Version `4.4.1` gepinnt, SHA-384-Hash hinterlegt (`integrity="sha384-..."`, `crossorigin="anonymous"`). Verhindert Code-Ausführung bei CDN-Kompromittierung.
-- **CSP `style-src` ohne `unsafe-inline`**: Durch vollständige Entfernung aller `style=""` HTML-Attribute konnte `'unsafe-inline'` aus dem `style-src` Directive entfernt werden – stärkste mögliche Einschränkung ohne Nonces/Hashes.
-- **CSP `connect-src`**: `https://formspree.io` ergänzt (wird für AJAX-POST benötigt).
-
-**3. Inline-Styles → CSS-Klassen** (`refactor/remove-inline-styles`)
-
-Über 30 `style=""` Attribute aus dem HTML entfernt. Neue CSS-Klassen:
-
-| Klasse | Zweck |
-|---|---|
-| `.hidden` | Utility: `display: none !important` |
-| `.nav-logo-link` | Nav-Logo-Link Styling |
-| `.modal-backdrop` | Modal-Hintergrund (position:fixed, overlay) |
-| `.modal-box` / `.modal-box--narrow` | Modal-Inhaltsbox |
-| `.modal-close` | Close-Button Positionierung |
-| `.modal-title`, `.modal-meta`, `.modal-body` | Modal-Inhalt-Typografie |
-| `.form-success`, `.form-success-icon` | Erfolgs-Screen Styling |
-| `.input-otp` | Code-Input (Schrift, Spacing, Zentrierung) |
-| `.code-hint`, `.resend-row`, `.resend-link` | Code-Eingabe UI |
-
-JavaScript (`ui.js`, `forms.js`): Alle `element.style.display = '...'` auf `classList.add/remove('hidden')` umgestellt.
-
-**4. Accessibility & UX** (`fix/accessibility`)
-
-- Alle `<label>`-Elemente mit `for="input-id"` verknüpft (Screen-Reader-Kompatibilität)
-- `autocomplete`-Attribute auf allen Inputs (`email`, `tel`, `name`, `given-name`, `family-name`, etc.)
-- `inputmode="tel"` auf Telefon-Inputs (mobile Zahlen-Tastatur)
-- `autocomplete="one-time-code"` + `inputmode="numeric"` auf Code-Input (iOS/Android OTP-Autofill)
-- `role="dialog"`, `aria-modal="true"`, `aria-labelledby` auf allen 3 Modals
-- `aria-label="Schließen"` auf Modal-Close-Buttons
-- Escape-Taste schließt offene Modals (Event-Listener in `ui.js`)
-
-#### Git-Commits dieser Session
-
-```
-ac73ad1  fix: OG-Image-URL auf nearcare.at korrigiert & SRI für EmailJS CDN
-dcb9fd3  feat: Heim-Formular auf Formspree AJAX umgestellt
-4dad3df  refactor: Alle Inline-Styles in CSS-Klassen extrahiert
-1e067c4  fix: Accessibility – Labels, autocomplete & inputmode
-```
-
-#### Offene Punkte
-
-- **sessionStorage-Verifikationscode**: Der 6-stellige Code liegt im sessionStorage (lesbar für alle Scripts). Mit CSP gut abgesichert, aber für maximale Sicherheit wäre ein serverseitiger Code-Versand via Cloudflare Workers die sauberere Lösung.
-- **EmailJS Allowed Origins**: Manuell im EmailJS-Dashboard auf `https://nearcare.at` setzen (siehe Session 1).
