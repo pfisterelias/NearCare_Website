@@ -227,3 +227,64 @@ a0efb79  merge: Brute-Force-Schutz in main übernommen
 
 - **EmailJS Allowed Origins** muss im EmailJS-Dashboard manuell auf `https://nearcare.at` gesetzt werden, um den Public Key vor Missbrauch auf fremden Domains zu schützen. (Dashboard → Account → Security → Allowed Origins)
 - Der Public Key im Code ist per Design öffentlich (Frontend-SDK) – die Allowed-Origins-Einschränkung ist die einzige serverseitige Absicherung.
+
+---
+
+### 2026-06-13 – Bugfixes, Sicherheit & Code-Qualität (Session 2)
+
+**Ausgangslage:** Nach dem Refactoring blieben mehrere Bugs, Sicherheitslücken und Code-Qualitätsprobleme bestehen, die in dieser Session systematisch behoben wurden.
+
+#### Was wurde gemacht?
+
+**1. Bugfixes** (`fix/quick-wins`, `feat/heim-form-ajax`)
+
+- **OG-Image-URL**: Zeigte noch auf `pfisterelias.github.io/...` statt `https://nearcare.at/og-preview.png`. Beim Teilen des Links wurde das Vorschaubild nicht korrekt geladen.
+- **Heim-Formular Redirect**: Native Formular-Submission leitete Nutzer auf Formspree-Seite um – kein Feedback, kein Verbleib auf nearcare.at. Fix: Umstellung auf `fetch()` AJAX-POST mit `Accept: application/json`. Erfolgsbestätigung (Step 2) analog zum Helfer-Formular implementiert.
+
+**2. Sicherheitshärdung** (`fix/quick-wins`)
+
+- **Subresource Integrity (SRI)**: EmailJS-CDN auf Version `4.4.1` gepinnt, SHA-384-Hash hinterlegt (`integrity="sha384-..."`, `crossorigin="anonymous"`). Verhindert Code-Ausführung bei CDN-Kompromittierung.
+- **CSP `style-src` ohne `unsafe-inline`**: Durch vollständige Entfernung aller `style=""` HTML-Attribute konnte `'unsafe-inline'` aus dem `style-src` Directive entfernt werden – stärkste mögliche Einschränkung ohne Nonces/Hashes.
+- **CSP `connect-src`**: `https://formspree.io` ergänzt (wird für AJAX-POST benötigt).
+
+**3. Inline-Styles → CSS-Klassen** (`refactor/remove-inline-styles`)
+
+Über 30 `style=""` Attribute aus dem HTML entfernt. Neue CSS-Klassen:
+
+| Klasse | Zweck |
+|---|---|
+| `.hidden` | Utility: `display: none !important` |
+| `.nav-logo-link` | Nav-Logo-Link Styling |
+| `.modal-backdrop` | Modal-Hintergrund (position:fixed, overlay) |
+| `.modal-box` / `.modal-box--narrow` | Modal-Inhaltsbox |
+| `.modal-close` | Close-Button Positionierung |
+| `.modal-title`, `.modal-meta`, `.modal-body` | Modal-Inhalt-Typografie |
+| `.form-success`, `.form-success-icon` | Erfolgs-Screen Styling |
+| `.input-otp` | Code-Input (Schrift, Spacing, Zentrierung) |
+| `.code-hint`, `.resend-row`, `.resend-link` | Code-Eingabe UI |
+
+JavaScript (`ui.js`, `forms.js`): Alle `element.style.display = '...'` auf `classList.add/remove('hidden')` umgestellt.
+
+**4. Accessibility & UX** (`fix/accessibility`)
+
+- Alle `<label>`-Elemente mit `for="input-id"` verknüpft (Screen-Reader-Kompatibilität)
+- `autocomplete`-Attribute auf allen Inputs (`email`, `tel`, `name`, `given-name`, `family-name`, etc.)
+- `inputmode="tel"` auf Telefon-Inputs (mobile Zahlen-Tastatur)
+- `autocomplete="one-time-code"` + `inputmode="numeric"` auf Code-Input (iOS/Android OTP-Autofill)
+- `role="dialog"`, `aria-modal="true"`, `aria-labelledby` auf allen 3 Modals
+- `aria-label="Schließen"` auf Modal-Close-Buttons
+- Escape-Taste schließt offene Modals (Event-Listener in `ui.js`)
+
+#### Git-Commits dieser Session
+
+```
+ac73ad1  fix: OG-Image-URL auf nearcare.at korrigiert & SRI für EmailJS CDN
+dcb9fd3  feat: Heim-Formular auf Formspree AJAX umgestellt
+4dad3df  refactor: Alle Inline-Styles in CSS-Klassen extrahiert
+1e067c4  fix: Accessibility – Labels, autocomplete & inputmode
+```
+
+#### Offene Punkte
+
+- **sessionStorage-Verifikationscode**: Der 6-stellige Code liegt im sessionStorage (lesbar für alle Scripts). Mit CSP gut abgesichert, aber für maximale Sicherheit wäre ein serverseitiger Code-Versand via Cloudflare Workers die sauberere Lösung.
+- **EmailJS Allowed Origins**: Manuell im EmailJS-Dashboard auf `https://nearcare.at` setzen (siehe Session 1).
