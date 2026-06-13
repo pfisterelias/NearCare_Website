@@ -116,7 +116,7 @@ dcb9fd3  feat: Heim-Formular auf Formspree AJAX umgestellt
 
 ## 2026-06-13 – Vollständiges Refactoring & Sicherheitshärtung (Session 1)
 
-**Entwickler:** Elias Pfister
+**Entwickler:** Nathan Pfister
 
 **Ausgangslage:** Die gesamte Website war in einer einzigen `index.html` (1782 Zeilen) – CSS inline, JavaScript inline, alle Event-Handler als `onclick`-Attribute.
 
