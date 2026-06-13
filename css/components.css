@@ -699,3 +699,11 @@
   color: var(--gray);
   margin-top: 1rem;
 }
+
+/* Honeypot-Feld – für Bots unsichtbar, für Menschen versteckt */
+.form-honeypot {
+  display: none !important;
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}

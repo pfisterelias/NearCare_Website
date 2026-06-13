@@ -16,6 +16,8 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:locale" content="de_AT">
 <meta name="twitter:card" content="summary_large_image">
+<!-- Content Security Policy: blockiert unerlaubte Skript-Quellen und Form-Ziele -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src https://api.emailjs.com; img-src 'self' data:; form-action 'self' https://formspree.io; base-uri 'self';">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -84,8 +86,8 @@
     </div>
 
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('heim', this)">Für Altersheime</button>
-      <button class="tab" onclick="switchTab('helfer', this)">Für Helfer</button>
+      <button class="tab active" data-tab="heim">Für Altersheime</button>
+      <button class="tab" data-tab="helfer">Für Helfer</button>
     </div>
 
     <div id="steps-heim" class="steps-grid reveal">
@@ -254,31 +256,33 @@
           <div class="form-card-tag">🏠 Für Altersheime & Pflegeeinrichtungen</div>
           <h3>Als Einrichtung anmelden</h3>
           <p>Testen Sie NearCare kostenlos in Ihrer Einrichtung. Keine Bindung, kein Risiko.</p>
+          <!-- Honeypot: Formspree ignoriert Einreichungen, wenn dieses Feld gefüllt ist -->
+          <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
           <div class="form-group">
             <label>Name der Einrichtung</label>
-            <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau">
+            <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau" required maxlength="100">
           </div>
           <div class="form-row">
             <div class="form-group">
               <label>Ansprechperson</label>
-              <input type="text" name="name" placeholder="Vor- und Nachname">
+              <input type="text" name="name" placeholder="Vor- und Nachname" required maxlength="100">
             </div>
             <div class="form-group">
               <label>Funktion</label>
-              <input type="text" name="funktion" placeholder="z.B. Heimleitung">
+              <input type="text" name="funktion" placeholder="z.B. Heimleitung" required maxlength="100">
             </div>
           </div>
           <div class="form-group">
             <label>E-Mail Adresse</label>
-            <input type="email" name="email" placeholder="name@einrichtung.at">
+            <input type="email" name="email" placeholder="name@einrichtung.at" required>
           </div>
           <div class="form-group">
             <label>Telefonnummer</label>
-            <input type="tel" name="telefon" placeholder="+43 ...">
+            <input type="tel" name="telefon" placeholder="+43 ..." required maxlength="20">
           </div>
           <div class="form-group">
             <label>Gemeinde / Ort</label>
-            <input type="text" name="ort" placeholder="z.B. Lochau">
+            <input type="text" name="ort" placeholder="z.B. Lochau" required maxlength="100">
           </div>
           <button type="submit" class="btn-form">Kostenlos anmelden →</button>
           <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
@@ -292,27 +296,29 @@
           <div class="form-card-tag">🎓 Für Schüler & Studenten</div>
           <h3>Als Helfer bewerben</h3>
           <p>Verdiene flexibel neben Schule oder Studium und tue dabei Gutes.</p>
+          <!-- Honeypot: Bots füllen dieses Feld, echte Nutzer sehen es nicht -->
+          <input type="text" id="h-honeypot" name="_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-row">
             <div class="form-group">
               <label>Vorname</label>
-              <input type="text" id="h-vorname" placeholder="Dein Vorname">
+              <input type="text" id="h-vorname" placeholder="Dein Vorname" required maxlength="50">
             </div>
             <div class="form-group">
               <label>Nachname</label>
-              <input type="text" id="h-nachname" placeholder="Dein Nachname">
+              <input type="text" id="h-nachname" placeholder="Dein Nachname" required maxlength="50">
             </div>
           </div>
           <div class="form-group">
             <label>E-Mail Adresse</label>
-            <input type="email" id="h-email" placeholder="name@beispiel.at">
+            <input type="email" id="h-email" placeholder="name@beispiel.at" required>
           </div>
           <div class="form-group">
             <label>Telefonnummer</label>
-            <input type="tel" id="h-telefon" placeholder="+43 ...">
+            <input type="tel" id="h-telefon" placeholder="+43 ..." required maxlength="20">
           </div>
           <div class="form-group">
             <label>Ich bin...</label>
-            <select id="h-status">
+            <select id="h-status" required>
               <option value="">Bitte auswählen</option>
               <option>Schüler/in</option>
               <option>Student/in</option>
@@ -321,9 +327,9 @@
           </div>
           <div class="form-group">
             <label>Wohnort</label>
-            <input type="text" id="h-wohnort" placeholder="z.B. Bregenz">
+            <input type="text" id="h-wohnort" placeholder="z.B. Bregenz" required maxlength="100">
           </div>
-          <button type="button" class="btn-form" id="helfer-send-code-btn" onclick="helferSendCode()">Jetzt bewerben →</button>
+          <button type="button" class="btn-form" id="helfer-send-code-btn">Jetzt bewerben →</button>
           <p class="form-note">100% kostenlos · Kein Risiko · Jederzeit abmeldbar</p>
         </div>
 
@@ -336,9 +342,9 @@
             <label>6-stelliger Code</label>
             <input type="text" id="h-code" placeholder="z.B. 483921" maxlength="6" style="font-size:1.3rem; letter-spacing:0.3em; text-align:center;">
           </div>
-          <button type="button" class="btn-form" id="helfer-verify-btn" onclick="helferVerifyCode()">Bestätigen →</button>
+          <button type="button" class="btn-form" id="helfer-verify-btn">Bestätigen →</button>
           <p style="font-size:0.8rem; color:var(--gray); margin-top:1rem; text-align:center;">
-            Kein Code erhalten? <span style="cursor:pointer; text-decoration:underline;" onclick="helferSendCode(true)">Erneut senden</span>
+            Kein Code erhalten? <span id="helfer-resend" style="cursor:pointer; text-decoration:underline;">Erneut senden</span>
           </p>
         </div>
 
@@ -365,9 +371,9 @@
 </section>
 
 <!-- DATENSCHUTZ MODAL -->
-<div id="datenschutz-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
+<div id="datenschutz-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
   <div style="max-width:780px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button onclick="document.getElementById('datenschutz-modal').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
+    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
     <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Datenschutzerklärung</h2>
     <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Stand: April 2025 | gemäß DSGVO & DSG</p>
 
@@ -407,9 +413,9 @@
 </div>
 
 <!-- IMPRESSUM MODAL -->
-<div id="impressum-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
+<div id="impressum-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
   <div style="max-width:680px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button onclick="document.getElementById('impressum-modal').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
+    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
     <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Impressum</h2>
     <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Angaben gemäß § 5 ECG</p>
 
@@ -436,9 +442,9 @@
 </div>
 
 <!-- AGB MODAL -->
-<div id="agb-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
+<div id="agb-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
   <div style="max-width:780px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button onclick="document.getElementById('agb-modal').style.display='none'" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
+    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
     <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Allgemeine Geschäftsbedingungen</h2>
     <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Stand: April 2025 | Version 1.0</p>
 
@@ -515,9 +521,9 @@
   <div class="logo">Near<span>Care</span></div>
   <p>© 2026 NearCare · Nähe die zählt</p>
   <div class="footer-links">
-    <a href="#" onclick="document.getElementById('datenschutz-modal').style.display='block'; return false;">Datenschutz</a>
-    <a href="#" onclick="document.getElementById('impressum-modal').style.display='block'; return false;">Impressum</a>
-    <a href="#" onclick="document.getElementById('agb-modal').style.display='block'; return false;">AGB</a>
+    <a href="#" data-opens="datenschutz-modal">Datenschutz</a>
+    <a href="#" data-opens="impressum-modal">Impressum</a>
+    <a href="#" data-opens="agb-modal">AGB</a>
     <a href="mailto:nearcare.office@gmail.com">Kontakt</a>
   </div>
 </footer>

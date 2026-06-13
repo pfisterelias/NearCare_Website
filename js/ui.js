@@ -1,5 +1,5 @@
 /* ============================================================
-   UI – Navigation, Tabs, Scroll-Reveal, Touch-Feedback
+   UI – Navigation, Tabs, Modals, Scroll-Reveal, Touch-Feedback
    ============================================================ */
 
 // Touch-Feedback für Karten (Mobile)
@@ -35,13 +35,40 @@ document.querySelectorAll('#nav-links a').forEach(link => {
   });
 });
 
-// Tab-Umschaltung (Wie es funktioniert)
+// Tab-Umschaltung via data-tab Attribut (kein inline onclick)
 function switchTab(type, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('steps-heim').style.display   = type === 'heim'   ? 'grid' : 'none';
   document.getElementById('steps-helfer').style.display = type === 'helfer' ? 'grid' : 'none';
 }
+
+document.querySelectorAll('[data-tab]').forEach(btn => {
+  btn.addEventListener('click', function() {
+    switchTab(this.dataset.tab, this);
+  });
+});
+
+// Modal-Handling (kein inline onclick)
+document.querySelectorAll('[data-opens]').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const modal = document.getElementById(trigger.dataset.opens);
+    if (modal) modal.style.display = 'block';
+  });
+});
+
+document.querySelectorAll('.modal-close').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.closest('[id$="-modal"]').style.display = 'none';
+  });
+});
+
+document.querySelectorAll('[id$="-modal"]').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  });
+});
 
 // Scroll-Reveal via IntersectionObserver
 const revealObserver = new IntersectionObserver((entries) => {

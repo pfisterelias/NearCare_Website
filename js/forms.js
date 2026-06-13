@@ -1,5 +1,5 @@
 /* ============================================================
-   FORMS – EmailJS-Konfiguration & Formular-Logik
+   FORMS – EmailJS-Konfiguration & sichere Formular-Logik
    ============================================================ */
 
 const EMAILJS_PUBLIC_KEY    = '0AbG1BR3yD0buuHum';
@@ -9,7 +9,47 @@ const EMAILJS_REG_TEMPLATE  = 'template_mq0yhqj';
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-// Hilfsfunktion: Button-Status setzen
+/* ── Sicherheits-Hilfsfunktionen ── */
+
+// Kryptografisch sichere 6-stellige Zufallszahl (ersetzt Math.random)
+function generateCode() {
+  const arr = new Uint32Array(1);
+  crypto.getRandomValues(arr);
+  return String(100000 + (arr[0] % 900000));
+}
+
+// Eingaben bereinigen – verhindert XSS bei EmailJS-Payload
+function sanitize(str) {
+  return String(str).trim().replace(/[<>&"'`]/g, c => ({
+    '<': '&lt;', '>': '&gt;', '&': '&amp;',
+    '"': '&quot;', "'": '&#x27;', '`': '&#x60;'
+  }[c]));
+}
+
+// E-Mail-Validierung
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+// Telefon-Validierung (österreichisches/europäisches Format)
+function isValidPhone(phone) {
+  return /^[\+\d\s\-\(\)]{7,20}$/.test(phone);
+}
+
+// Rate-Limiting: mindestens 60 Sekunden zwischen Code-Versendungen
+const SEND_COOLDOWN_MS = 60_000;
+
+function isRateLimited() {
+  const last = parseInt(sessionStorage.getItem('nearcare_last_send') || '0');
+  return Date.now() - last < SEND_COOLDOWN_MS;
+}
+
+function markSent() {
+  sessionStorage.setItem('nearcare_last_send', Date.now().toString());
+}
+
+/* ── Helfer-Formular ── */
+
 function helferSetBtn(btn, text, color) {
   btn.textContent = text;
   btn.style.background = color || '';
@@ -18,26 +58,55 @@ function helferSetBtn(btn, text, color) {
 
 // Schritt 1 → 2: Verifizierungscode per E-Mail senden
 async function helferSendCode(resend = false) {
-  const vorname  = document.getElementById('h-vorname').value.trim();
-  const nachname = document.getElementById('h-nachname').value.trim();
-  const email    = document.getElementById('h-email').value.trim();
-  const telefon  = document.getElementById('h-telefon').value.trim();
-  const status   = document.getElementById('h-status').value;
-  const wohnort  = document.getElementById('h-wohnort').value.trim();
-  const btn      = document.getElementById('helfer-send-code-btn');
+  // Honeypot-Check: Bots füllen dieses Feld, echte Nutzer nicht
+  if (document.getElementById('h-honeypot').value) return;
 
-  if (!resend && (!vorname || !nachname || !email || !telefon || !status || !wohnort)) {
-    helferSetBtn(btn, 'Bitte alle Felder ausfüllen', '#E74C3C');
+  const btn = document.getElementById('helfer-send-code-btn');
+
+  // Rate-Limiting prüfen
+  if (isRateLimited()) {
+    helferSetBtn(btn, 'Bitte kurz warten...', '#888');
     setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
     return;
   }
 
-  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  const vorname  = sanitize(document.getElementById('h-vorname').value);
+  const nachname = sanitize(document.getElementById('h-nachname').value);
+  const email    = document.getElementById('h-email').value.trim();
+  const telefon  = document.getElementById('h-telefon').value.trim();
+  const status   = document.getElementById('h-status').value;
+  const wohnort  = sanitize(document.getElementById('h-wohnort').value);
+
+  if (!resend) {
+    if (!vorname || !nachname || !email || !telefon || !status || !wohnort) {
+      helferSetBtn(btn, 'Bitte alle Felder ausfüllen', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      helferSetBtn(btn, 'Bitte gültige E-Mail eingeben', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+      return;
+    }
+
+    if (!isValidPhone(telefon)) {
+      helferSetBtn(btn, 'Bitte gültige Telefonnummer eingeben', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+      return;
+    }
+  }
+
+  const code = generateCode();
   sessionStorage.setItem('nearcare_code', code);
   sessionStorage.setItem('nearcare_code_exp', Date.now() + 10 * 60 * 1000);
-  sessionStorage.setItem('nearcare_data', JSON.stringify({ vorname, nachname, email, telefon, status, wohnort }));
+  sessionStorage.setItem('nearcare_data', JSON.stringify({
+    vorname, nachname, email,
+    telefon: sanitize(telefon), status, wohnort
+  }));
 
   if (!resend) helferSetBtn(btn, 'Sende Code...', '#888');
+  markSent();
 
   try {
     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CODE_TEMPLATE, {
@@ -102,10 +171,10 @@ async function helferVerifyCode() {
   }
 }
 
-// Heim-Formular: Validierung vor Formspree-Submit
+/* ── Heim-Formular (Formspree) ── */
 document.querySelector('.form-card.heim form').addEventListener('submit', function(e) {
   const btn    = this.querySelector('.btn-form');
-  const inputs = this.querySelectorAll('input, select');
+  const inputs = this.querySelectorAll('input:not(.form-honeypot), select');
   let filled   = true;
   inputs.forEach(i => { if (!i.value.trim()) filled = false; });
 
@@ -116,3 +185,8 @@ document.querySelector('.form-card.heim form').addEventListener('submit', functi
     setTimeout(() => { btn.textContent = 'Kostenlos anmelden →'; btn.style.background = ''; }, 2000);
   }
 });
+
+/* ── Event-Listener (ersetzen alle onclick-Attribute im HTML) ── */
+document.getElementById('helfer-send-code-btn').addEventListener('click', () => helferSendCode());
+document.getElementById('helfer-verify-btn').addEventListener('click', () => helferVerifyCode());
+document.getElementById('helfer-resend').addEventListener('click', () => helferSendCode(true));
