@@ -261,30 +261,30 @@
             <!-- Honeypot: Formspree ignoriert Einreichungen, wenn dieses Feld gefüllt ist -->
             <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
             <div class="form-group">
-              <label>Name der Einrichtung</label>
-              <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau" required maxlength="100">
+              <label for="h-einrichtung">Name der Einrichtung</label>
+              <input type="text" id="h-einrichtung" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau" required maxlength="100" autocomplete="organization">
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label>Ansprechperson</label>
-                <input type="text" name="name" placeholder="Vor- und Nachname" required maxlength="100">
+                <label for="h-name">Ansprechperson</label>
+                <input type="text" id="h-name" name="name" placeholder="Vor- und Nachname" required maxlength="100" autocomplete="name">
               </div>
               <div class="form-group">
-                <label>Funktion</label>
-                <input type="text" name="funktion" placeholder="z.B. Heimleitung" required maxlength="100">
+                <label for="h-funktion">Funktion</label>
+                <input type="text" id="h-funktion" name="funktion" placeholder="z.B. Heimleitung" required maxlength="100" autocomplete="organization-title">
               </div>
             </div>
             <div class="form-group">
-              <label>E-Mail Adresse</label>
-              <input type="email" name="email" placeholder="name@einrichtung.at" required>
+              <label for="h-email-heim">E-Mail Adresse</label>
+              <input type="email" id="h-email-heim" name="email" placeholder="name@einrichtung.at" required maxlength="100" autocomplete="email">
             </div>
             <div class="form-group">
-              <label>Telefonnummer</label>
-              <input type="tel" name="telefon" placeholder="+43 ..." required maxlength="20">
+              <label for="h-telefon-heim">Telefonnummer</label>
+              <input type="tel" id="h-telefon-heim" name="telefon" placeholder="+43 ..." required maxlength="20" autocomplete="tel" inputmode="tel">
             </div>
             <div class="form-group">
-              <label>Gemeinde / Ort</label>
-              <input type="text" name="ort" placeholder="z.B. Lochau" required maxlength="100">
+              <label for="h-ort">Gemeinde / Ort</label>
+              <input type="text" id="h-ort" name="ort" placeholder="z.B. Lochau" required maxlength="100" autocomplete="address-level2">
             </div>
             <button type="submit" class="btn-form" id="heim-submit-btn">Kostenlos anmelden →</button>
             <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
@@ -310,25 +310,25 @@
           <input type="text" id="h-honeypot" name="_hp" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="form-row">
             <div class="form-group">
-              <label>Vorname</label>
-              <input type="text" id="h-vorname" placeholder="Dein Vorname" required maxlength="50">
+              <label for="h-vorname">Vorname</label>
+              <input type="text" id="h-vorname" placeholder="Dein Vorname" required maxlength="50" autocomplete="given-name">
             </div>
             <div class="form-group">
-              <label>Nachname</label>
-              <input type="text" id="h-nachname" placeholder="Dein Nachname" required maxlength="50">
+              <label for="h-nachname">Nachname</label>
+              <input type="text" id="h-nachname" placeholder="Dein Nachname" required maxlength="50" autocomplete="family-name">
             </div>
           </div>
           <div class="form-group">
-            <label>E-Mail Adresse</label>
-            <input type="email" id="h-email" placeholder="name@beispiel.at" required>
+            <label for="h-email">E-Mail Adresse</label>
+            <input type="email" id="h-email" placeholder="name@beispiel.at" required maxlength="100" autocomplete="email">
           </div>
           <div class="form-group">
-            <label>Telefonnummer</label>
-            <input type="tel" id="h-telefon" placeholder="+43 ..." required maxlength="20">
+            <label for="h-telefon">Telefonnummer</label>
+            <input type="tel" id="h-telefon" placeholder="+43 ..." required maxlength="20" autocomplete="tel" inputmode="tel">
           </div>
           <div class="form-group">
-            <label>Ich bin...</label>
-            <select id="h-status" required>
+            <label for="h-status">Ich bin...</label>
+            <select id="h-status" required autocomplete="off">
               <option value="">Bitte auswählen</option>
               <option>Schüler/in</option>
               <option>Student/in</option>
@@ -336,8 +336,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Wohnort</label>
-            <input type="text" id="h-wohnort" placeholder="z.B. Bregenz" required maxlength="100">
+            <label for="h-wohnort">Wohnort</label>
+            <input type="text" id="h-wohnort" placeholder="z.B. Bregenz" required maxlength="100" autocomplete="address-level2">
           </div>
           <button type="button" class="btn-form" id="helfer-send-code-btn">Jetzt bewerben →</button>
           <p class="form-note">100% kostenlos · Kein Risiko · Jederzeit abmeldbar</p>
