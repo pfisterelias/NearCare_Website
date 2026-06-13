@@ -157,3 +157,73 @@ Push auf `main` → GitHub Actions deployt automatisch auf GitHub Pages → near
 
 **Elias Pfister & Luca Marinelli**
 nearcare.office@gmail.com · nearcare.at · Vorarlberg, Österreich
+
+---
+
+## Entwicklertagebuch
+
+### 2026-06-13 – Vollständiges Refactoring & Sicherheitshärtung
+
+**Ausgangslage:** Die gesamte Website war in einer einzigen `index.html` (1782 Zeilen) untergebracht – CSS inline, JavaScript inline, alle Event-Handler als `onclick`-Attribute.
+
+#### Was wurde gemacht?
+
+**1. CSS-Schichtenmodell eingeführt** (`refactor/project-structure`)
+
+Die ~600 Zeilen Inline-CSS wurden in 5 separate Dateien aufgeteilt:
+
+| Datei | Inhalt |
+|---|---|
+| `css/base.css` | CSS-Variablen, Reset, Typografie, Animationen (`fadeUp`, `fadeIn`) |
+| `css/layout.css` | Navigation, Footer, Abschnittsbasis |
+| `css/components.css` | Buttons, Badges, Karten, Tabs, Formulare |
+| `css/sections.css` | Hero, Quote, Helfer, Pricing, CTA, Register |
+| `css/responsive.css` | Alle Mobile-Breakpoints (`max-width: 768px`) |
+
+Dabei wurden auch bestehende Fehler behoben: Der `.helfer-grid`-Selector im Responsive-CSS verwendete den fragilen `[style*="grid-template-columns"]`-Hack; ersetzt durch eine saubere Klasse.
+
+**2. JavaScript modularisiert** (`refactor/project-structure`)
+
+Der Inline-Script-Block wurde in 2 Module aufgeteilt:
+- `js/ui.js` – Touch-Feedback, Burger-Nav, Tab-Umschaltung, Modals, Scroll-Reveal
+- `js/forms.js` – Helfer-Registrierungslogik, EmailJS-Integration, Heim-Formular
+
+**3. Sicherheitshärtung** (`feature/security-hardening`)
+
+Alle 10+ `onclick`-Attribute aus dem HTML entfernt. Stattdessen Event-Delegation via `data-tab`, `data-opens`, `.modal-close`.
+
+Eingebaute Schutzmaßnahmen:
+- **CSP-Header** via `<meta>`: Strikte `script-src`, kein `unsafe-inline` für Scripts
+- **`crypto.getRandomValues()`** statt `Math.random()` für Verifikationscodes
+- **`sanitize()`-Funktion**: HTML-Entity-Escaping vor EmailJS-Versand
+- **E-Mail & Telefon-Validierung** via Regex
+- **Rate-Limiting**: 60 Sekunden Cooldown zwischen Code-Versendungen (sessionStorage)
+- **Honeypot-Felder** in beiden Formularen (`.form-honeypot`)
+- **`required` + `maxlength`** auf allen Formularfeldern
+- **sessionStorage wird nach Verifikation vollständig geleert**
+
+**4. Bugfixes** (`fix/bruteforce-protection`)
+
+- **Brute-Force-Schutz**: `helferVerifyCode()` hatte kein Versuchslimit – ein Angreifer hätte alle 900.000 möglichen 6-stelligen Codes im 10-Minuten-Fenster ausprobieren können. Fix: Max. 5 Versuche (`MAX_CODE_ATTEMPTS`), danach Button deaktiviert.
+- **Rate-Limiting-Feedback im Schritt 2**: Bei `helferSendCode(true)` (Resend) wurde Feedback auf dem in Schritt 2 unsichtbaren `#helfer-send-code-btn` angezeigt. Fix: Separater Feedback-Pfad für den `#helfer-resend`-Span.
+- **Heim-Formular**: Von Click-Handler auf `submit`-Event-Listener umgestellt, um Doppelversand zu vermeiden.
+
+**5. Entwicklerdokumentation** (`feature/security-hardening`)
+
+`CLAUDE.md` neu erstellt mit vollständiger Projektdokumentation: Technologiestack, Dateistruktur, Designsystem, Formulare, Sicherheitsmaßnahmen, häufige Änderungen, Branch-Strategie.
+
+#### Git-Commits dieser Session
+
+```
+59b07d2  refactor: Monolithische index.html in Schichten aufgeteilt
+a34b44e  feat(security): Sicherheitshärtung & Entwicklerdokumentation
+d8cece3  merge: Projektstruktur-Refactoring in main übernommen
+08df445  merge: Sicherheitshärtung in main übernommen
+e5164ed  fix: Brute-Force-Schutz und Rate-Limiting-Feedback korrigiert
+a0efb79  merge: Brute-Force-Schutz in main übernommen
+```
+
+#### Offene Punkte / Hinweise
+
+- **EmailJS Allowed Origins** muss im EmailJS-Dashboard manuell auf `https://nearcare.at` gesetzt werden, um den Public Key vor Missbrauch auf fremden Domains zu schützen. (Dashboard → Account → Security → Allowed Origins)
+- Der Public Key im Code ist per Design öffentlich (Frontend-SDK) – die Allowed-Origins-Einschränkung ist die einzige serverseitige Absicherung.
