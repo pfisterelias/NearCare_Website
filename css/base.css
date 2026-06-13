@@ -47,3 +47,14 @@ body {
 }
 
 .hidden { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero h1, .hero-sub, .hero-actions, .hero-stats, .hero-visual {
+    animation: none;
+  }
+}

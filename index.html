@@ -348,13 +348,15 @@
           <div class="form-card-tag">✉️ E-Mail bestätigen</div>
           <h3>Code eingeben</h3>
           <p id="helfer-code-hint" class="code-hint"></p>
+          <p id="helfer-code-timer" class="code-timer"></p>
           <div class="form-group">
-            <label>6-stelliger Code</label>
+            <label for="h-code">6-stelliger Code</label>
             <input type="text" id="h-code" class="input-otp" placeholder="z.B. 483921" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
           </div>
           <button type="button" class="btn-form" id="helfer-verify-btn">Bestätigen →</button>
           <p class="resend-row">
             Kein Code erhalten? <span id="helfer-resend" class="resend-link">Erneut senden</span>
+            · <span id="helfer-back" class="resend-link">← E-Mail ändern</span>
           </p>
         </div>
 

@@ -35,6 +35,15 @@ document.querySelectorAll('#nav-links a').forEach(link => {
   });
 });
 
+// Schließt Burger-Menü bei Klick außerhalb
+document.addEventListener('click', (e) => {
+  if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && e.target !== navBurger && !navBurger.contains(e.target)) {
+    navLinks.classList.remove('open');
+    navBurger.innerHTML = burgerIcon;
+    navBurger.setAttribute('aria-label', 'Menü öffnen');
+  }
+});
+
 // Tab-Umschaltung via data-tab Attribut (kein inline onclick)
 function switchTab(type, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));

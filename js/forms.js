@@ -66,6 +66,49 @@ function helferSetBtn(btn, text, color) {
   btn.disabled = !!color;
 }
 
+// Countdown-Timer für Verifikationscode (10 Minuten)
+let _countdownInterval = null;
+
+function startCountdown() {
+  clearInterval(_countdownInterval);
+  const display = document.getElementById('helfer-code-timer');
+  const endTime = parseInt(sessionStorage.getItem('nearcare_code_exp') || '0');
+
+  function tick() {
+    const remaining = Math.max(0, endTime - Date.now());
+    const mins = Math.floor(remaining / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    if (remaining > 0) {
+      display.textContent = `Code gültig noch ${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      display.classList.remove('code-timer--expired');
+    } else {
+      clearInterval(_countdownInterval);
+      display.textContent = 'Code abgelaufen – bitte neu anfordern';
+      display.classList.add('code-timer--expired');
+    }
+  }
+  tick();
+  _countdownInterval = setInterval(tick, 1000);
+}
+
+function stopCountdown() {
+  clearInterval(_countdownInterval);
+  const display = document.getElementById('helfer-code-timer');
+  if (display) display.textContent = '';
+}
+
+// Zurück zu Step 1 (z.B. falsche E-Mail eingegeben)
+function helferGoBack() {
+  stopCountdown();
+  document.getElementById('helfer-step2').classList.add('hidden');
+  document.getElementById('helfer-step1').classList.remove('hidden');
+  document.getElementById('h-code').value = '';
+  const btn = document.getElementById('helfer-verify-btn');
+  btn.textContent = 'Bestätigen →';
+  btn.style.background = '';
+  btn.disabled = false;
+}
+
 // Schritt 1 → 2: Verifizierungscode per E-Mail senden
 async function helferSendCode(resend = false) {
   // Honeypot-Check: Bots füllen dieses Feld, echte Nutzer nicht
@@ -137,6 +180,7 @@ async function helferSendCode(resend = false) {
     document.getElementById('helfer-step2').classList.remove('hidden');
     document.getElementById('helfer-code-hint').textContent =
       `Wir haben einen 6-stelligen Code an ${email} geschickt. Bitte gib ihn hier ein um deine Adresse zu bestätigen.`;
+    startCountdown();
   } catch (e) {
     helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
     setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 3000);
@@ -249,3 +293,4 @@ document.getElementById('heim-form').addEventListener('submit', async function(e
 document.getElementById('helfer-send-code-btn').addEventListener('click', () => helferSendCode());
 document.getElementById('helfer-verify-btn').addEventListener('click', () => helferVerifyCode());
 document.getElementById('helfer-resend').addEventListener('click', () => helferSendCode(true));
+document.getElementById('helfer-back').addEventListener('click', () => helferGoBack());
