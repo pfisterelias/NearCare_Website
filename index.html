@@ -5,1116 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NearCare – Nähe die zählt</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <meta name="description" content="NearCare verbindet Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuung. Flexibel, einfach, fair.">
-  <meta property="og:title" content="NearCare – Nähe die zählt">
-  <meta property="og:description" content="Wir verbinden Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuung.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://pfisterelias.github.io/NearCare_Website/">
-  <meta property="og:image" content="https://pfisterelias.github.io/NearCare_Website/og-preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:locale" content="de_AT">
-  <meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="NearCare verbindet Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuung. Flexibel, einfach, fair.">
+<meta property="og:title" content="NearCare – Nähe die zählt">
+<meta property="og:description" content="Wir verbinden Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuung.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nearcare.at">
+<meta property="og:image" content="https://pfisterelias.github.io/NearCare_Website/og-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:locale" content="de_AT">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --navy: #0D1F2D;
-    --terra: #C45E3E;
-    --terra-light: #D4724F;
-    --warm: #F0C987;
-    --cream: #F8F5EF;
-    --white: #FFFFFF;
-    --gray: #6B7280;
-    --light: #F0F4F8;
-    --border: #E5E7EB;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--navy);
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 5%;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    transition: all 0.3s;
-  }
-
-  .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--navy);
-    letter-spacing: -0.02em;
-  }
-
-  .logo span { color: var(--terra); }
-
-  .nav-links {
-    display: flex; gap: 2rem; list-style: none; align-items: center;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--navy);
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    opacity: 0.75;
-    transition: opacity 0.2s;
-  }
-
-  .nav-links a:hover { opacity: 1; }
-
-  .nav-cta {
-    background: var(--terra) !important;
-    color: var(--white) !important;
-    padding: 0.55rem 1.3rem;
-    border-radius: 6px;
-    opacity: 1 !important;
-    font-weight: 600 !important;
-    transition: background 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--terra-light) !important; }
-
-  .nav-burger {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--navy);
-    padding: 0.3rem;
-    line-height: 0;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 7rem 5% 4rem;
-    gap: 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 60%;
-    height: 120%;
-    background: radial-gradient(ellipse at center, rgba(196,94,62,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(196,94,62,0.1);
-    color: var(--terra);
-    border: 1px solid rgba(196,94,62,0.25);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--terra);
-    border-radius: 50%;
-  }
-
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 4.5vw, 4.2rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-
-  .hero h1 em {
-    font-style: normal;
-    color: var(--terra);
-    position: relative;
-  }
-
-  .hero h1 em::after {
-    content: '';
-    position: absolute;
-    bottom: 2px; left: 0; right: 0;
-    height: 3px;
-    background: var(--warm);
-    border-radius: 2px;
-  }
-
-  .hero-sub {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--gray);
-    max-width: 480px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    animation: fadeUp 0.6s ease 0.3s both;
-  }
-
-  .btn-primary {
-    background: var(--navy);
-    color: var(--white);
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(13,31,45,0.2);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(13,31,45,0.25);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--navy);
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1.5px solid var(--border);
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--navy);
-    background: rgba(13,31,45,0.04);
-  }
-
-  .hero-stats {
-    display: flex;
-    gap: 2.5rem;
-    margin-top: 3rem;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--border);
-    animation: fadeUp 0.6s ease 0.4s both;
-  }
-
-  .stat-item { flex-shrink: 0; }
-
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--navy);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.78rem;
-    color: var(--gray);
-    font-weight: 500;
-    margin-top: 0.2rem;
-    letter-spacing: 0.02em;
-  }
-
-  /* Hero Visual */
-  .hero-visual {
-    position: relative;
-    animation: fadeIn 0.8s ease 0.3s both;
-  }
-
-  .hero-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--terra), var(--warm));
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .avatar {
-    width: 48px; height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--terra), var(--terra-light));
-    display: flex; align-items: center; justify-content: center;
-    color: white;
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-
-  .card-header-text h4 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--navy);
-  }
-
-  .card-header-text p {
-    font-size: 0.78rem;
-    color: var(--gray);
-  }
-
-  .status-badge {
-    margin-left: auto;
-    background: rgba(196,94,62,0.1);
-    color: var(--terra);
-    padding: 0.3rem 0.8rem;
-    border-radius: 100px;
-    font-size: 0.72rem;
-    font-weight: 600;
-  }
-
-  .task-list { display: flex; flex-direction: column; gap: 0.8rem; }
-
-  .task-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.9rem 1rem;
-    background: var(--cream);
-    border-radius: 10px;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--navy);
-    transition: transform 0.2s;
-  }
-
-  .task-item:hover { transform: translateX(4px); }
-
-  .task-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .task-icon.green { background: rgba(196,94,62,0.12); }
-  .task-icon.gold { background: rgba(201,168,76,0.12); }
-  .task-icon.blue { background: rgba(59,130,246,0.12); }
-
-  .task-meta {
-    margin-left: auto;
-    font-size: 0.75rem;
-    color: var(--gray);
-  }
-
-  .floating-badge {
-    position: absolute;
-    bottom: -1.2rem;
-    right: -1.2rem;
-    width: 88px;
-    height: 88px;
-    background: var(--navy);
-    color: var(--white);
-    border-radius: 50%;
-    border: 2px dashed rgba(255,255,255,0.4);
-    outline: 3px solid var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    line-height: 1.6;
-    transform: rotate(-12deg);
-    box-shadow: 0 8px 24px rgba(13,31,45,0.25);
-    text-transform: uppercase;
-  }
-
-  .floating-badge span {
-    display: block;
-    font-size: 1.4rem;
-    font-family: 'Playfair Display', serif;
-    color: var(--warm);
-  }
-
-  /* ── SECTION BASE ── */
-  section {
-    padding: 8rem 5%;
-    border-top: 1px solid var(--border);
-  }
-
-  .hero, .pricing, .cta-section {
-    border-top: none;
-  }
-
-  .how, #heim, #helfer {
-    min-height: 100vh;
-  }
-
-  .section-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--terra);
-    margin-bottom: 0.8rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3vw, 2.8rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  .section-sub {
-    font-size: 1.05rem;
-    color: var(--gray);
-    line-height: 1.7;
-    font-weight: 300;
-    max-width: 560px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  /* ── HOW IT WORKS ── */
-  .how {
-    background: var(--white);
-  }
-
-  .how-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .how-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .how-header .section-sub { margin: 0 auto; }
-
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 3rem;
-    background: var(--cream);
-    padding: 0.4rem;
-    border-radius: 12px;
-    width: fit-content;
-    margin: 0 auto 3rem;
-  }
-
-  .tab {
-    padding: 0.65rem 1.8rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--gray);
-    background: transparent;
-    transition: all 0.25s;
-  }
-
-  .tab.active {
-    background: var(--white);
-    color: var(--navy);
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-
-  .step-card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 2rem;
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-  }
-
-  .step-card:hover, .step-card:active, .step-card.touched {
-    border-color: var(--terra);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
-  }
-
-  .helfer-card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 2rem;
-    min-height: 220px;
-    border: 1px solid var(--border);
-    transition: all 0.3s;
-  }
-  .helfer-card:hover, .helfer-card:active, .helfer-card.touched {
-    border-color: var(--terra);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
-  }
-
-  .step-card::after {
-    content: attr(data-step);
-    position: absolute;
-    top: -0.5rem;
-    right: 1rem;
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem;
-    font-weight: 700;
-    color: rgba(13,31,45,0.04);
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .step-icon {
-    color: var(--terra);
-    margin-bottom: 1rem;
-    line-height: 0;
-  }
-
-  .step-card h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--navy);
-  }
-
-  .step-card p {
-    font-size: 0.88rem;
-    color: var(--gray);
-    line-height: 1.6;
-  }
-
-  /* ── SPLIT SECTIONS ── */
-  .split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .split.reverse { direction: rtl; }
-  .split.reverse > * { direction: ltr; }
-
-  .split-visual {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
-  }
-
-  .feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    margin-top: 2rem;
-  }
-
-  .feature-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .feature-icon {
-    width: 40px; height: 40px;
-    background: rgba(196,94,62,0.1);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .feature-text h4 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.2rem;
-  }
-
-  .feature-text p {
-    font-size: 0.84rem;
-    color: var(--gray);
-    line-height: 1.5;
-  }
-
-  /* ── PRICING ── */
-  .pricing {
-    background: var(--navy);
-    color: var(--white);
-  }
-
-  .pricing .section-tag { color: var(--warm); }
-  .pricing .section-title { color: var(--white); }
-  .pricing .section-sub { color: rgba(255,255,255,0.6); }
-
-  .pricing-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .pricing-header {
-    text-align: center;
-    margin-bottom: 4rem;
-  }
-
-  .pricing-header .section-sub { margin: 0 auto; }
-
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .pricing-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 2.5rem;
-    transition: transform 0.3s, border-color 0.3s;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .pricing-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,255,255,0.2);
-  }
-
-  .pricing-card.featured {
-    background: var(--terra);
-    border-color: var(--terra);
-  }
-
-  .pricing-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--warm);
-    margin-bottom: 1rem;
-  }
-
-  .pricing-card.featured .pricing-label { color: rgba(255,255,255,0.8); }
-
-  .pricing-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .price {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 700;
-    line-height: 1;
-    margin: 1.5rem 0 0.3rem;
-    color: var(--white);
-  }
-
-  .price sup {
-    font-size: 1.2rem;
-    vertical-align: super;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
-  }
-
-  .price-period {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 2rem;
-  }
-
-  .pricing-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-bottom: 2rem;
-  }
-
-  .pricing-features li {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.88rem;
-    color: rgba(255,255,255,0.8);
-  }
-
-  .pricing-features li::before {
-    content: '✓';
-    color: var(--warm);
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  .pricing-card.featured .pricing-features li::before { color: var(--white); }
-
-  .pricing-features { flex: 1; }
-
-  .btn-pricing {
-    margin-top: auto;
-    display: block;
-    text-align: center;
-    padding: 0.85rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1.5px solid rgba(255,255,255,0.25);
-    color: var(--white);
-    transition: all 0.2s;
-  }
-
-  .btn-pricing:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(255,255,255,0.4);
-  }
-
-  .pricing-card.featured .btn-pricing {
-    background: var(--white);
-    color: var(--terra);
-    border-color: var(--white);
-  }
-
-  .pricing-card.featured .btn-pricing:hover {
-    background: var(--cream);
-  }
-
-  /* ── CATEGORIES ── */
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
-
-  .cat-card {
-    background: var(--white);
-    border-radius: 14px;
-    padding: 2rem;
-    min-height: 220px;
-    text-align: center;
-    border: 1px solid var(--border);
-    transition: all 0.3s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .cat-card:hover, .cat-card:active, .cat-card.touched {
-    border-color: var(--terra);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(196,94,62,0.1);
-  }
-
-  .cat-emoji { color: var(--terra); margin-bottom: 0.7rem; line-height: 0; }
-
-  .cat-card h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.3rem;
-  }
-
-  .cat-card p {
-    font-size: 0.75rem;
-    color: var(--gray);
-  }
-
-  /* ── CTA ── */
-  .cta-section {
-    background: linear-gradient(135deg, var(--terra) 0%, #A34830 100%);
-    text-align: center;
-    color: var(--white);
-    padding: 6rem 5%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -20%;
-    width: 60%;
-    height: 200%;
-    background: radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 60%);
-  }
-
-  .cta-section .section-title { color: var(--white); margin-bottom: 1rem; }
-
-  .cta-section p {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-cta-white {
-    background: var(--white);
-    color: var(--terra);
-    padding: 0.9rem 2.2rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  }
-
-  .btn-cta-white:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-  }
-
-  .btn-cta-outline {
-    background: transparent;
-    color: var(--white);
-    padding: 0.9rem 2.2rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-    border: 1.5px solid rgba(255,255,255,0.4);
-    transition: all 0.2s;
-  }
-
-  .btn-cta-outline:hover {
-    border-color: var(--white);
-    background: rgba(255,255,255,0.1);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy);
-    color: rgba(255,255,255,0.6);
-    padding: 3rem 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  footer .logo { color: var(--white); font-size: 1.2rem; }
-
-  footer p { font-size: 0.82rem; }
-
-  footer a {
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: color 0.2s;
-  }
-
-  footer a:hover { color: var(--white); }
-
-  .footer-links { display: flex; gap: 1.5rem; }
-
-  /* ── REGISTRATION FORMS ── */
-  .register {
-    background: var(--white);
-  }
-
-  .register-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .register-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
-  }
-
-  .form-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .form-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-  }
-
-  .form-card.heim::before { background: var(--terra); }
-  .form-card.helfer::before { background: var(--warm); }
-
-  .form-card-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-  }
-
-  .form-card.heim .form-card-tag { color: var(--terra); }
-  .form-card.helfer .form-card-tag { color: var(--warm); }
-
-  .form-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 0.5rem;
-  }
-
-  .form-card > p {
-    font-size: 0.88rem;
-    color: var(--gray);
-    margin-bottom: 1.8rem;
-    line-height: 1.6;
-  }
-
-  .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 0.4rem;
-    letter-spacing: 0.01em;
-  }
-
-  .form-group input,
-  .form-group select {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--navy);
-    background: var(--cream);
-    transition: border-color 0.2s;
-    outline: none;
-  }
-
-  .form-group input:focus,
-  .form-group select:focus {
-    border-color: var(--terra);
-    background: var(--white);
-  }
-
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .btn-form {
-    width: 100%;
-    padding: 0.9rem;
-    border: none;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    margin-top: 0.5rem;
-  }
-
-  .form-card.heim .btn-form {
-    background: var(--terra);
-    color: var(--white);
-    box-shadow: 0 4px 16px rgba(196,94,62,0.3);
-  }
-
-  .form-card.helfer .btn-form {
-    background: var(--navy);
-    color: var(--white);
-    box-shadow: 0 4px 16px rgba(13,31,45,0.2);
-  }
-
-  .btn-form:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  }
-
-  .form-note {
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--gray);
-    margin-top: 1rem;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; padding-top: 5rem; }
-    .hero-visual { display: none; }
-    .steps-grid { grid-template-columns: 1fr; }
-    .split { grid-template-columns: 1fr; gap: 2.5rem; }
-    .split.reverse { direction: ltr; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .categories-grid { grid-template-columns: repeat(2, 1fr); }
-    .register-grid { grid-template-columns: 1fr; }
-    #helfer [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
-
-    section { padding: 4rem 5%; }
-    .how, #heim, #helfer { min-height: unset; }
-    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 2rem; padding-top: 1.5rem; }
-    .stat-num { font-size: 1.6rem; }
-    .stat-label { font-size: 0.72rem; }
-
-    /* Tabs */
-    .tabs { width: 100%; }
-    .tab { flex: 1; padding: 0.65rem 0.8rem; font-size: 0.82rem; }
-
-    /* Cards - min-height entfernen */
-    .cat-card, .helfer-card { min-height: unset; }
-
-    /* CTA - eigenes Padding reduzieren */
-    .cta-section { padding: 4rem 5%; }
-
-    /* Section-Header-Abstände */
-    .how-header, .pricing-header { margin-bottom: 2rem; }
-
-    /* Formular - Felder untereinander */
-    .form-row { grid-template-columns: 1fr; }
-    .form-card { padding: 1.8rem; }
-
-    /* Footer - vertikal stapeln */
-    footer { flex-direction: column; align-items: center; text-align: center; }
-    .footer-links { justify-content: center; flex-wrap: wrap; }
-
-    .nav-burger { display: flex; align-items: center; }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0; right: 0;
-      background: rgba(255,255,255,0.98);
-      backdrop-filter: blur(12px);
-      flex-direction: column;
-      padding: 0.5rem 5% 1.5rem;
-      gap: 0;
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-    }
-
-    .nav-links.open { display: flex; }
-
-    .nav-links li { border-bottom: 1px solid var(--border); }
-    .nav-links li:last-child { border-bottom: none; padding-top: 0.75rem; }
-
-    .nav-links a {
-      display: block;
-      padding: 1rem 0;
-      font-size: 1rem;
-      opacity: 1;
-    }
-
-    .nav-links .nav-cta {
-      display: block;
-      text-align: center;
-      padding: 0.85rem 1.5rem;
-    }
-  }
-</style>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
 
@@ -1142,15 +49,15 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero" style="grid-template-columns: 1fr; text-align: center; justify-items: center;">
-  <div class="hero-content" style="max-width: 720px;">
+<section class="hero">
+  <div class="hero-content">
     <h1>Betreuung neu<br><em>gedacht</em></h1>
-    <p class="hero-sub" style="max-width: 560px; margin-left: auto; margin-right: auto;">NearCare verbindet Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuungstätigkeiten. Flexibel, einfach, fair.</p>
-    <div class="hero-actions" style="justify-content: center;">
+    <p class="hero-sub">NearCare verbindet Schüler und Studenten mit Altersheimen und Privatpersonen in Vorarlberg – für nicht-medizinische Betreuungstätigkeiten. Flexibel, einfach, fair.</p>
+    <div class="hero-actions">
       <a href="#register" class="btn-primary">Jetzt starten →</a>
       <a href="#how" class="btn-secondary">Wie es funktioniert</a>
     </div>
-    <div class="hero-stats" style="justify-content: center;">
+    <div class="hero-stats">
       <div class="stat-item">
         <div class="stat-num">47</div>
         <div class="stat-label">Altersheime<br>in Vorarlberg</div>
@@ -1219,21 +126,21 @@
   </div>
 </section>
 
-<!-- ÜBER UNS -->
-<section class="quote-section" style="background: var(--cream);">
-  <div style="max-width: 780px; margin: 0 auto; text-align: center;" class="reveal">
+<!-- ÜBER UNS / QUOTE -->
+<section class="quote-section">
+  <div class="quote-inner reveal">
     <div class="section-tag">Warum NearCare?</div>
-    <blockquote style="font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 400; color: var(--navy); line-height: 1.75; font-style: italic; margin: 1.5rem 0;">
+    <blockquote>
       „Während meines Zivildienstes 2023 im Altersheim habe ich gesehen, wie viel Pflegepersonal leisten muss – und wie oft dabei der soziale Kontakt zu kurz kommt. Nicht weil niemand wollte, sondern weil die Zeit einfach fehlte. Als ich Luca davon erzählt habe, war sofort klar: das wollen wir ändern."
     </blockquote>
-    <p style="color: var(--terra); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em;">— Elias, 22 & Luca, 24 · Gründer von NearCare · Vorarlberg</p>
+    <p class="quote-author">— Elias, 22 & Luca, 24 · Gründer von NearCare · Vorarlberg</p>
   </div>
 </section>
 
 <!-- TÄTIGKEITEN -->
-<section id="heim" style="background: var(--white);">
-  <div style="max-width: 1100px; margin: 0 auto;">
-    <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+<section id="heim">
+  <div class="activities-inner">
+    <div class="activities-header reveal">
       <div class="section-tag">Tätigkeiten</div>
       <h2 class="section-title">Was unsere Helfer übernehmen</h2>
       <p class="section-sub">Nur nicht-medizinische Tätigkeiten – damit das Pflegepersonal sich auf das Wesentliche konzentrieren kann.</p>
@@ -1263,29 +170,29 @@
   </div>
 </section>
 
-<!-- FOR HELFER -->
-<section id="helfer" style="background: var(--white);">
-  <div style="max-width: 1100px; margin: 0 auto; padding: 0 2rem;">
-    <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+<!-- FÜR HELFER -->
+<section id="helfer">
+  <div class="helfer-inner">
+    <div class="helfer-header reveal">
       <div class="section-tag">Für Helfer</div>
       <h2 class="section-title">Verdiene fair,<br>arbeite flexibel</h2>
-      <p class="section-sub" style="max-width: 600px; margin: 0 auto;">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
+      <p class="section-sub" style="max-width: 600px;">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
     </div>
-    <div class="reveal" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+    <div class="helfer-grid reveal">
       <div class="helfer-card">
-        <div style="margin-bottom: 1rem; color: var(--terra); line-height: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
-        <h4 style="margin-bottom: 0.5rem;">Fairer Lohn</h4>
-        <p style="font-size: 0.9rem; color: var(--gray);">Du bekommst deinen Lohn direkt – geringfügig, ohne Abzüge, ohne Umwege.</p>
+        <div class="helfer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
+        <h4>Fairer Lohn</h4>
+        <p>Du bekommst deinen Lohn direkt – geringfügig, ohne Abzüge, ohne Umwege.</p>
       </div>
       <div class="helfer-card">
-        <div style="margin-bottom: 1rem; color: var(--terra); line-height: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <h4 style="margin-bottom: 0.5rem;">Dein Rhythmus</h4>
-        <p style="font-size: 0.9rem; color: var(--gray);">Du entscheidest, wann du Zeit hast – ob einmal die Woche oder öfter.</p>
+        <div class="helfer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h4>Dein Rhythmus</h4>
+        <p>Du entscheidest, wann du Zeit hast – ob einmal die Woche oder öfter.</p>
       </div>
       <div class="helfer-card">
-        <div style="margin-bottom: 1rem; color: var(--terra); line-height: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
-        <h4 style="margin-bottom: 0.5rem;">Dein Einsatz zählt</h4>
-        <p style="font-size: 0.9rem; color: var(--gray);">Gute Einsätze sprechen sich rum – dein Ruf und deine Chancen wachsen mit der Zeit.</p>
+        <div class="helfer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+        <h4>Dein Einsatz zählt</h4>
+        <p>Gute Einsätze sprechen sich rum – dein Ruf und deine Chancen wachsen mit der Zeit.</p>
       </div>
     </div>
   </div>
@@ -1334,47 +241,49 @@
 <!-- REGISTER -->
 <section class="register" id="register">
   <div class="register-inner">
-    <div style="text-align: center;" class="reveal">
+    <div class="register-header reveal">
       <div class="section-tag">Jetzt starten</div>
       <h2 class="section-title">Bereit loszulegen?</h2>
-      <p class="section-sub" style="margin: 0 auto;">Registriere dich jetzt – kostenlos und unverbindlich. Wir melden uns persönlich bei dir.</p>
+      <p class="section-sub">Registriere dich jetzt – kostenlos und unverbindlich. Wir melden uns persönlich bei dir.</p>
     </div>
 
     <div class="register-grid">
       <!-- HEIM FORM -->
-      <div class="form-card heim reveal"><form action="https://formspree.io/f/xzdyadge" method="POST">
-        <div class="form-card-tag">🏠 Für Altersheime & Pflegeeinrichtungen</div>
-        <h3>Als Einrichtung anmelden</h3>
-        <p>Testen Sie NearCare kostenlos in Ihrer Einrichtung. Keine Bindung, kein Risiko.</p>
-        <div class="form-group">
-          <label>Name der Einrichtung</label>
-          <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau">
-        </div>
-        <div class="form-row">
+      <div class="form-card heim reveal">
+        <form action="https://formspree.io/f/xzdyadge" method="POST">
+          <div class="form-card-tag">🏠 Für Altersheime & Pflegeeinrichtungen</div>
+          <h3>Als Einrichtung anmelden</h3>
+          <p>Testen Sie NearCare kostenlos in Ihrer Einrichtung. Keine Bindung, kein Risiko.</p>
           <div class="form-group">
-            <label>Ansprechperson</label>
-            <input type="text" name="name" placeholder="Vor- und Nachname">
+            <label>Name der Einrichtung</label>
+            <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Ansprechperson</label>
+              <input type="text" name="name" placeholder="Vor- und Nachname">
+            </div>
+            <div class="form-group">
+              <label>Funktion</label>
+              <input type="text" name="funktion" placeholder="z.B. Heimleitung">
+            </div>
           </div>
           <div class="form-group">
-            <label>Funktion</label>
-            <input type="text" name="funktion" placeholder="z.B. Heimleitung">
+            <label>E-Mail Adresse</label>
+            <input type="email" name="email" placeholder="name@einrichtung.at">
           </div>
-        </div>
-        <div class="form-group">
-          <label>E-Mail Adresse</label>
-          <input type="email" name="email" placeholder="name@einrichtung.at">
-        </div>
-        <div class="form-group">
-          <label>Telefonnummer</label>
-          <input type="tel" name="telefon" placeholder="+43 ...">
-        </div>
-        <div class="form-group">
-          <label>Gemeinde / Ort</label>
-          <input type="text" name="ort" placeholder="z.B. Lochau">
-        </div>
-        <button type="submit" class="btn-form">Kostenlos anmelden →</button>
-        <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-      </form></div>
+          <div class="form-group">
+            <label>Telefonnummer</label>
+            <input type="tel" name="telefon" placeholder="+43 ...">
+          </div>
+          <div class="form-group">
+            <label>Gemeinde / Ort</label>
+            <input type="text" name="ort" placeholder="z.B. Lochau">
+          </div>
+          <button type="submit" class="btn-form">Kostenlos anmelden →</button>
+          <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+        </form>
+      </div>
 
       <!-- HELFER FORM -->
       <div class="form-card helfer reveal">
@@ -1481,9 +390,9 @@
       <p>Die Verarbeitung erfolgt auf Basis von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie Art. 6 Abs. 1 lit. a DSGVO (Einwilligung durch Absenden des Formulars).</p>
 
       <h3 style="margin:1.5rem 0 0.5rem;">5. Eingesetzte Drittanbieter</h3>
-      <p><strong>EmailJS</strong> (emailjs.com): Zum Versand von Verifizierungscodes und Registrierungsbestätigungen per E-Mail. EmailJS verarbeitet E-Mail-Adressen auf Servern in der EU/USA. Datenschutzerklärung: <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank">emailjs.com/legal/privacy-policy</a></p>
-      <p><strong>Formspree</strong> (formspree.io): Zur Verarbeitung von Einrichtungs-Registrierungen. Formspree speichert Formulardaten auf US-amerikanischen Servern. Datenschutzerklärung: <a href="https://formspree.io/legal/privacy-policy/" target="_blank">formspree.io/legal/privacy-policy</a></p>
-      <p><strong>GitHub Pages</strong> (github.com): Diese Website wird über GitHub Pages gehostet. GitHub kann dabei technische Zugriffsdaten (IP-Adresse, Zeitstempel) speichern. Datenschutzerklärung: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank">docs.github.com/privacy</a></p>
+      <p><strong>EmailJS</strong> (emailjs.com): Zum Versand von Verifizierungscodes und Registrierungsbestätigungen per E-Mail. EmailJS verarbeitet E-Mail-Adressen auf Servern in der EU/USA. Datenschutzerklärung: <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">emailjs.com/legal/privacy-policy</a></p>
+      <p><strong>Formspree</strong> (formspree.io): Zur Verarbeitung von Einrichtungs-Registrierungen. Formspree speichert Formulardaten auf US-amerikanischen Servern. Datenschutzerklärung: <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">formspree.io/legal/privacy-policy</a></p>
+      <p><strong>GitHub Pages</strong> (github.com): Diese Website wird über GitHub Pages gehostet. GitHub kann dabei technische Zugriffsdaten (IP-Adresse, Zeitstempel) speichern. Datenschutzerklärung: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">docs.github.com/privacy</a></p>
 
       <h3 style="margin:1.5rem 0 0.5rem;">6. Speicherdauer</h3>
       <p>Personenbezogene Daten aus Registrierungsanfragen werden nur so lange gespeichert, wie es für die Bearbeitung der Anfrage notwendig ist, spätestens jedoch bis zur Löschung auf ausdrücklichen Wunsch des Nutzers.</p>
@@ -1491,7 +400,7 @@
       <h3 style="margin:1.5rem 0 0.5rem;">7. Ihre Rechte</h3>
       <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie das Recht auf Datenübertragbarkeit Ihrer personenbezogenen Daten. Außerdem steht Ihnen ein Widerspruchsrecht gegen die Verarbeitung zu.</p>
       <p>Zur Ausübung Ihrer Rechte wenden Sie sich an: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a></p>
-      <p>Sie haben zudem das Recht, bei der österreichischen Datenschutzbehörde Beschwerde einzulegen: <a href="https://www.dsb.gv.at" target="_blank">www.dsb.gv.at</a></p>
+      <p>Sie haben zudem das Recht, bei der österreichischen Datenschutzbehörde Beschwerde einzulegen: <a href="https://www.dsb.gv.at" target="_blank" rel="noopener noreferrer">www.dsb.gv.at</a></p>
 
     </div>
   </div>
@@ -1613,170 +522,8 @@
   </div>
 </footer>
 
-<script>
-  // Touch-Feedback für Karten
-  const touchCards = document.querySelectorAll('.cat-card, .helfer-card, .step-card');
-  touchCards.forEach(card => {
-    card.addEventListener('touchstart', () => card.classList.add('touched'), { passive: true });
-    card.addEventListener('touchend', () => setTimeout(() => card.classList.remove('touched'), 250), { passive: true });
-    card.addEventListener('touchcancel', () => card.classList.remove('touched'), { passive: true });
-  });
-  document.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    const el = document.elementFromPoint(t.clientX, t.clientY)?.closest('.cat-card, .helfer-card, .step-card');
-    touchCards.forEach(c => c.classList.toggle('touched', c === el));
-  }, { passive: true });
-
-  // Mobile nav
-  const navBurger = document.getElementById('nav-burger');
-  const navLinks = document.getElementById('nav-links');
-  const burgerIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
-  const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-  navBurger.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    navBurger.innerHTML = isOpen ? closeIcon : burgerIcon;
-    navBurger.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
-  });
-  document.querySelectorAll('#nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      navBurger.innerHTML = burgerIcon;
-      navBurger.setAttribute('aria-label', 'Menü öffnen');
-    });
-  });
-
-  // Tab switching
-  function switchTab(type, btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('steps-heim').style.display = type === 'heim' ? 'grid' : 'none';
-    document.getElementById('steps-helfer').style.display = type === 'helfer' ? 'grid' : 'none';
-  }
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ── EMAILJS CONFIG ──────────────────────────────────────────
-  const EMAILJS_PUBLIC_KEY     = '0AbG1BR3yD0buuHum';
-  const EMAILJS_SERVICE_ID     = 'service_6sgu2so';
-  const EMAILJS_CODE_TEMPLATE  = 'template_1iodh3m';
-  const EMAILJS_REG_TEMPLATE   = 'template_mq0yhqj';
-  // ────────────────────────────────────────────────────────────
-
-  emailjs.init(EMAILJS_PUBLIC_KEY);
-
-  function helferSetBtn(btn, text, color) {
-    btn.textContent = text;
-    btn.style.background = color || '';
-    btn.disabled = !!color;
-  }
-
-  async function helferSendCode(resend = false) {
-    const vorname  = document.getElementById('h-vorname').value.trim();
-    const nachname = document.getElementById('h-nachname').value.trim();
-    const email    = document.getElementById('h-email').value.trim();
-    const telefon  = document.getElementById('h-telefon').value.trim();
-    const status   = document.getElementById('h-status').value;
-    const wohnort  = document.getElementById('h-wohnort').value.trim();
-    const btn      = document.getElementById('helfer-send-code-btn');
-
-    if (!resend && (!vorname || !nachname || !email || !telefon || !status || !wohnort)) {
-      helferSetBtn(btn, 'Bitte alle Felder ausfüllen', '#E74C3C');
-      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
-      return;
-    }
-
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    sessionStorage.setItem('nearcare_code', code);
-    sessionStorage.setItem('nearcare_code_exp', Date.now() + 10 * 60 * 1000);
-    sessionStorage.setItem('nearcare_data', JSON.stringify({ vorname, nachname, email, telefon, status, wohnort }));
-
-    if (!resend) helferSetBtn(btn, 'Sende Code...', '#888');
-
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CODE_TEMPLATE, {
-        to_email: email,
-        to_name: vorname,
-        passcode: code
-      });
-
-      document.getElementById('helfer-step1').style.display = 'none';
-      document.getElementById('helfer-step2').style.display = 'block';
-      document.getElementById('helfer-code-hint').textContent =
-        `Wir haben einen 6-stelligen Code an ${email} geschickt. Bitte gib ihn hier ein um deine Adresse zu bestätigen.`;
-    } catch (e) {
-      helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
-      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 3000);
-    }
-  }
-
-  async function helferVerifyCode() {
-    const entered = document.getElementById('h-code').value.trim();
-    const saved   = sessionStorage.getItem('nearcare_code');
-    const exp     = parseInt(sessionStorage.getItem('nearcare_code_exp') || '0');
-    const btn     = document.getElementById('helfer-verify-btn');
-
-    if (Date.now() > exp) {
-      btn.textContent = 'Code abgelaufen – bitte neu anfordern';
-      btn.style.background = '#E74C3C';
-      setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 3000);
-      return;
-    }
-
-    if (entered !== saved) {
-      btn.textContent = 'Falscher Code – nochmal versuchen';
-      btn.style.background = '#E74C3C';
-      setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 2500);
-      return;
-    }
-
-    helferSetBtn(btn, 'Wird gesendet...', '#888');
-    const d = JSON.parse(sessionStorage.getItem('nearcare_data') || '{}');
-
-    try {
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_REG_TEMPLATE, {
-        vorname:  d.vorname,
-        nachname: d.nachname,
-        email:    d.email,
-        telefon:  d.telefon,
-        status:   d.status,
-        wohnort:  d.wohnort
-      });
-
-      sessionStorage.removeItem('nearcare_code');
-      sessionStorage.removeItem('nearcare_code_exp');
-      sessionStorage.removeItem('nearcare_data');
-
-      document.getElementById('helfer-step2').style.display = 'none';
-      document.getElementById('helfer-step3').style.display = 'block';
-    } catch (e) {
-      helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
-      setTimeout(() => helferSetBtn(btn, 'Bestätigen →'), 3000);
-    }
-  }
-
-  // Heim-Formular (Formspree, unveränderter Flow)
-  document.querySelector('.form-card.heim .btn-form').addEventListener('click', function() {
-    const btn = this;
-    const inputs = btn.closest('.form-card').querySelectorAll('input, select');
-    let filled = true;
-    inputs.forEach(i => { if (!i.value) filled = false; });
-    if (!filled) {
-      btn.textContent = 'Bitte alle Felder ausfüllen';
-      btn.style.background = '#E74C3C';
-      setTimeout(() => { btn.textContent = 'Kostenlos anmelden →'; btn.style.background = ''; }, 2000);
-      return;
-    }
-    btn.closest('form').submit();
-  });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/forms.js"></script>
 </body>
 </html>
