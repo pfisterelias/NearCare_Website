@@ -38,6 +38,7 @@ function isValidPhone(phone) {
 
 // Rate-Limiting: mindestens 60 Sekunden zwischen Code-Versendungen
 const SEND_COOLDOWN_MS = 60_000;
+const MAX_CODE_ATTEMPTS = 5;
 
 function isRateLimited() {
   const last = parseInt(sessionStorage.getItem('nearcare_last_send') || '0');
@@ -46,6 +47,15 @@ function isRateLimited() {
 
 function markSent() {
   sessionStorage.setItem('nearcare_last_send', Date.now().toString());
+  sessionStorage.removeItem('nearcare_attempts');
+}
+
+function getAttempts() {
+  return parseInt(sessionStorage.getItem('nearcare_attempts') || '0');
+}
+
+function incrementAttempts() {
+  sessionStorage.setItem('nearcare_attempts', String(getAttempts() + 1));
 }
 
 /* ── Helfer-Formular ── */
@@ -61,14 +71,22 @@ async function helferSendCode(resend = false) {
   // Honeypot-Check: Bots füllen dieses Feld, echte Nutzer nicht
   if (document.getElementById('h-honeypot').value) return;
 
-  const btn = document.getElementById('helfer-send-code-btn');
-
-  // Rate-Limiting prüfen
+  // Rate-Limiting prüfen – Feedback je nach aktivem Schritt
   if (isRateLimited()) {
-    helferSetBtn(btn, 'Bitte kurz warten...', '#888');
-    setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+    if (resend) {
+      const span = document.getElementById('helfer-resend');
+      const orig = span.textContent;
+      span.textContent = 'Bitte noch warten...';
+      setTimeout(() => { span.textContent = orig; }, 2500);
+    } else {
+      const btn = document.getElementById('helfer-send-code-btn');
+      helferSetBtn(btn, 'Bitte kurz warten...', '#888');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2500);
+    }
     return;
   }
+
+  const btn = document.getElementById('helfer-send-code-btn');
 
   const vorname  = sanitize(document.getElementById('h-vorname').value);
   const nachname = sanitize(document.getElementById('h-nachname').value);
@@ -127,10 +145,19 @@ async function helferSendCode(resend = false) {
 
 // Schritt 2 → 3: Code prüfen & Bewerbung abschicken
 async function helferVerifyCode() {
-  const entered = document.getElementById('h-code').value.trim();
-  const saved   = sessionStorage.getItem('nearcare_code');
-  const exp     = parseInt(sessionStorage.getItem('nearcare_code_exp') || '0');
-  const btn     = document.getElementById('helfer-verify-btn');
+  const entered   = document.getElementById('h-code').value.trim();
+  const saved     = sessionStorage.getItem('nearcare_code');
+  const exp       = parseInt(sessionStorage.getItem('nearcare_code_exp') || '0');
+  const btn       = document.getElementById('helfer-verify-btn');
+  const attempts  = getAttempts();
+
+  // Zu viele Fehlversuche → gesperrt bis neuer Code
+  if (attempts >= MAX_CODE_ATTEMPTS) {
+    btn.textContent = 'Zu viele Versuche – bitte neuen Code anfordern';
+    btn.style.background = '#E74C3C';
+    btn.disabled = true;
+    return;
+  }
 
   if (Date.now() > exp) {
     btn.textContent = 'Code abgelaufen – bitte neu anfordern';
@@ -140,9 +167,17 @@ async function helferVerifyCode() {
   }
 
   if (entered !== saved) {
-    btn.textContent = 'Falscher Code – nochmal versuchen';
-    btn.style.background = '#E74C3C';
-    setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 2500);
+    incrementAttempts();
+    const remaining = MAX_CODE_ATTEMPTS - getAttempts();
+    if (remaining <= 0) {
+      btn.textContent = 'Zu viele Versuche – bitte neuen Code anfordern';
+      btn.style.background = '#E74C3C';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Falscher Code – noch ${remaining} Versuch${remaining === 1 ? '' : 'e'}`;
+      btn.style.background = '#E74C3C';
+      setTimeout(() => { btn.textContent = 'Bestätigen →'; btn.style.background = ''; }, 2500);
+    }
     return;
   }
 
