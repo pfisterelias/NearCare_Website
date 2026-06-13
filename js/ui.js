@@ -39,8 +39,8 @@ document.querySelectorAll('#nav-links a').forEach(link => {
 function switchTab(type, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('steps-heim').style.display   = type === 'heim'   ? 'grid' : 'none';
-  document.getElementById('steps-helfer').style.display = type === 'helfer' ? 'grid' : 'none';
+  document.getElementById('steps-heim').classList.toggle('hidden', type !== 'heim');
+  document.getElementById('steps-helfer').classList.toggle('hidden', type !== 'helfer');
 }
 
 document.querySelectorAll('[data-tab]').forEach(btn => {
@@ -54,20 +54,27 @@ document.querySelectorAll('[data-opens]').forEach(trigger => {
   trigger.addEventListener('click', (e) => {
     e.preventDefault();
     const modal = document.getElementById(trigger.dataset.opens);
-    if (modal) modal.style.display = 'block';
+    if (modal) modal.classList.remove('hidden');
   });
 });
 
 document.querySelectorAll('.modal-close').forEach(btn => {
   btn.addEventListener('click', () => {
-    btn.closest('[id$="-modal"]').style.display = 'none';
+    btn.closest('[id$="-modal"]').classList.add('hidden');
   });
 });
 
 document.querySelectorAll('[id$="-modal"]').forEach(modal => {
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.style.display = 'none';
+    if (e.target === modal) modal.classList.add('hidden');
   });
+});
+
+// Escape-Taste schließt offene Modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('[id$="-modal"]:not(.hidden)').forEach(m => m.classList.add('hidden'));
+  }
 });
 
 // Scroll-Reveal via IntersectionObserver

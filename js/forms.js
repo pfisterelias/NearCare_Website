@@ -133,8 +133,8 @@ async function helferSendCode(resend = false) {
       passcode: code
     });
 
-    document.getElementById('helfer-step1').style.display = 'none';
-    document.getElementById('helfer-step2').style.display = 'block';
+    document.getElementById('helfer-step1').classList.add('hidden');
+    document.getElementById('helfer-step2').classList.remove('hidden');
     document.getElementById('helfer-code-hint').textContent =
       `Wir haben einen 6-stelligen Code an ${email} geschickt. Bitte gib ihn hier ein um deine Adresse zu bestätigen.`;
   } catch (e) {
@@ -198,8 +198,8 @@ async function helferVerifyCode() {
     sessionStorage.removeItem('nearcare_code_exp');
     sessionStorage.removeItem('nearcare_data');
 
-    document.getElementById('helfer-step2').style.display = 'none';
-    document.getElementById('helfer-step3').style.display = 'block';
+    document.getElementById('helfer-step2').classList.add('hidden');
+    document.getElementById('helfer-step3').classList.remove('hidden');
   } catch (e) {
     helferSetBtn(btn, 'Fehler – nochmal versuchen', '#E74C3C');
     setTimeout(() => helferSetBtn(btn, 'Bestätigen →'), 3000);
@@ -235,8 +235,8 @@ document.getElementById('heim-form').addEventListener('submit', async function(e
 
     if (!res.ok) throw new Error('Formspree error');
 
-    document.getElementById('heim-step1').style.display = 'none';
-    document.getElementById('heim-step2').style.display = 'block';
+    document.getElementById('heim-step1').classList.add('hidden');
+    document.getElementById('heim-step2').classList.remove('hidden');
   } catch {
     btn.textContent = 'Fehler – nochmal versuchen';
     btn.style.background = '#E74C3C';

@@ -51,6 +51,12 @@ nav {
 
 .nav-cta:hover { background: var(--terra-light) !important; }
 
+.nav-logo-link {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
 .nav-burger {
   display: none;
   background: none;

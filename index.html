@@ -17,7 +17,7 @@
 <meta property="og:locale" content="de_AT">
 <meta name="twitter:card" content="summary_large_image">
 <!-- Content Security Policy: blockiert unerlaubte Skript-Quellen und Form-Ziele -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src https://api.emailjs.com https://formspree.io; img-src 'self' data:; form-action 'self' https://formspree.io; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.emailjs.com https://formspree.io; img-src 'self' data:; form-action 'self' https://formspree.io; base-uri 'self';">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -29,7 +29,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" style="text-decoration: none; display: flex; align-items: center;">
+  <a href="#" class="nav-logo-link">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 70" width="180" height="48">
       <text x="8" y="46" font-family="'Playfair Display', Georgia, serif" font-size="38" font-weight="700" letter-spacing="-1">
         <tspan fill="#0D1F2D">Near</tspan><tspan fill="#C45E3E">Care</tspan>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div id="steps-helfer" class="steps-grid reveal" style="display:none">
+    <div id="steps-helfer" class="steps-grid reveal hidden">
       <div class="step-card" data-step="1">
         <div class="step-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <h3>Kurz anmelden</h3>
@@ -178,7 +178,7 @@
     <div class="helfer-header reveal">
       <div class="section-tag">Für Helfer</div>
       <h2 class="section-title">Verdiene fair,<br>arbeite flexibel</h2>
-      <p class="section-sub" style="max-width: 600px;">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
+      <p class="section-sub">Als Schüler oder Student kannst du nebenbei Gutes tun und dabei faire Vergütung erhalten – ganz ohne bürokratischen Aufwand.</p>
     </div>
     <div class="helfer-grid reveal">
       <div class="helfer-card">
@@ -292,10 +292,10 @@
         </div>
 
         <!-- Schritt 2: Erfolg -->
-        <div id="heim-step2" style="display:none; text-align:center; padding: 2rem 0;">
-          <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+        <div id="heim-step2" class="form-success hidden">
+          <div class="form-success-icon">✅</div>
           <h3>Anfrage eingegangen!</h3>
-          <p style="color:var(--gray);">Wir melden uns innerhalb von 24 Stunden bei Ihnen. Danke für Ihr Interesse an NearCare.</p>
+          <p>Wir melden uns innerhalb von 24 Stunden bei Ihnen. Danke für Ihr Interesse an NearCare.</p>
         </div>
       </div>
 
@@ -344,25 +344,25 @@
         </div>
 
         <!-- Schritt 2: Code eingeben -->
-        <div id="helfer-step2" style="display:none;">
+        <div id="helfer-step2" class="hidden">
           <div class="form-card-tag">✉️ E-Mail bestätigen</div>
           <h3>Code eingeben</h3>
-          <p id="helfer-code-hint" style="margin-bottom:1.5rem;"></p>
+          <p id="helfer-code-hint" class="code-hint"></p>
           <div class="form-group">
             <label>6-stelliger Code</label>
-            <input type="text" id="h-code" placeholder="z.B. 483921" maxlength="6" style="font-size:1.3rem; letter-spacing:0.3em; text-align:center;">
+            <input type="text" id="h-code" class="input-otp" placeholder="z.B. 483921" maxlength="6" inputmode="numeric" autocomplete="one-time-code">
           </div>
           <button type="button" class="btn-form" id="helfer-verify-btn">Bestätigen →</button>
-          <p style="font-size:0.8rem; color:var(--gray); margin-top:1rem; text-align:center;">
-            Kein Code erhalten? <span id="helfer-resend" style="cursor:pointer; text-decoration:underline;">Erneut senden</span>
+          <p class="resend-row">
+            Kein Code erhalten? <span id="helfer-resend" class="resend-link">Erneut senden</span>
           </p>
         </div>
 
         <!-- Schritt 3: Erfolg -->
-        <div id="helfer-step3" style="display:none; text-align:center; padding: 2rem 0;">
-          <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+        <div id="helfer-step3" class="form-success hidden">
+          <div class="form-success-icon">✅</div>
           <h3>Bewerbung eingegangen!</h3>
-          <p style="color:var(--gray);">Wir melden uns bald bei dir. Danke, dass du Teil von NearCare werden willst.</p>
+          <p>Wir melden uns bald bei dir. Danke, dass du Teil von NearCare werden willst.</p>
         </div>
       </div>
     </div>
@@ -371,7 +371,7 @@
 
 <!-- CTA -->
 <section class="cta-section">
-  <div class="section-tag" style="color: rgba(255,255,255,0.6);">NearCare · Vorarlberg</div>
+  <div class="section-tag">NearCare · Vorarlberg</div>
   <h2 class="section-title">Nähe die wirklich zählt.</h2>
   <p>Gemeinsam schaffen wir mehr Zeit für das Wesentliche – in der Pflege und im Leben.</p>
   <div class="cta-buttons">
@@ -381,39 +381,39 @@
 </section>
 
 <!-- DATENSCHUTZ MODAL -->
-<div id="datenschutz-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
-  <div style="max-width:780px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
-    <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Datenschutzerklärung</h2>
-    <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Stand: April 2025 | gemäß DSGVO & DSG</p>
+<div id="datenschutz-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="datenschutz-title">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Schließen">✕</button>
+    <h2 id="datenschutz-title" class="modal-title">Datenschutzerklärung</h2>
+    <p class="modal-meta">Stand: April 2025 | gemäß DSGVO & DSG</p>
 
-    <div style="line-height:1.9; color:#2D3748; font-size:0.92rem;">
+    <div class="modal-body">
 
-      <h3 style="margin:1.5rem 0 0.5rem;">1. Verantwortlicher</h3>
+      <h3>1. Verantwortlicher</h3>
       <p>Elias Pfister & Luca Marinelli<br>
       Kochabühel 6, 6822 Satteins<br>
       Vorarlberg, Österreich<br>
       E-Mail: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a></p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">2. Welche Daten wir erheben</h3>
+      <h3>2. Welche Daten wir erheben</h3>
       <p>Bei der Registrierung als Helfer erheben wir folgende personenbezogene Daten: Vorname, Nachname, E-Mail-Adresse, Telefonnummer, Status (Schüler/Student) und Wohnort. Bei der Registrierung als Einrichtung erheben wir: Name der Einrichtung, Ansprechperson, Funktion, E-Mail-Adresse, Telefonnummer und Ort.</p>
       <p>Beim Besuch der Website werden keine Cookies gesetzt und keine Nutzerdaten automatisch gespeichert. Es findet kein Tracking statt.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">3. Zweck der Verarbeitung</h3>
+      <h3>3. Zweck der Verarbeitung</h3>
       <p>Die erhobenen Daten werden ausschließlich zur Bearbeitung von Registrierungsanfragen und zur Kontaktaufnahme im Rahmen des Onboarding-Prozesses verwendet. Eine darüber hinausgehende Nutzung oder Weitergabe an Dritte erfolgt nicht ohne ausdrückliche Einwilligung.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">4. Rechtsgrundlage</h3>
+      <h3>4. Rechtsgrundlage</h3>
       <p>Die Verarbeitung erfolgt auf Basis von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie Art. 6 Abs. 1 lit. a DSGVO (Einwilligung durch Absenden des Formulars).</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">5. Eingesetzte Drittanbieter</h3>
+      <h3>5. Eingesetzte Drittanbieter</h3>
       <p><strong>EmailJS</strong> (emailjs.com): Zum Versand von Verifizierungscodes und Registrierungsbestätigungen per E-Mail. EmailJS verarbeitet E-Mail-Adressen auf Servern in der EU/USA. Datenschutzerklärung: <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">emailjs.com/legal/privacy-policy</a></p>
       <p><strong>Formspree</strong> (formspree.io): Zur Verarbeitung von Einrichtungs-Registrierungen. Formspree speichert Formulardaten auf US-amerikanischen Servern. Datenschutzerklärung: <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">formspree.io/legal/privacy-policy</a></p>
       <p><strong>GitHub Pages</strong> (github.com): Diese Website wird über GitHub Pages gehostet. GitHub kann dabei technische Zugriffsdaten (IP-Adresse, Zeitstempel) speichern. Datenschutzerklärung: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">docs.github.com/privacy</a></p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">6. Speicherdauer</h3>
+      <h3>6. Speicherdauer</h3>
       <p>Personenbezogene Daten aus Registrierungsanfragen werden nur so lange gespeichert, wie es für die Bearbeitung der Anfrage notwendig ist, spätestens jedoch bis zur Löschung auf ausdrücklichen Wunsch des Nutzers.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">7. Ihre Rechte</h3>
+      <h3>7. Ihre Rechte</h3>
       <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie das Recht auf Datenübertragbarkeit Ihrer personenbezogenen Daten. Außerdem steht Ihnen ein Widerspruchsrecht gegen die Verarbeitung zu.</p>
       <p>Zur Ausübung Ihrer Rechte wenden Sie sich an: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a></p>
       <p>Sie haben zudem das Recht, bei der österreichischen Datenschutzbehörde Beschwerde einzulegen: <a href="https://www.dsb.gv.at" target="_blank" rel="noopener noreferrer">www.dsb.gv.at</a></p>
@@ -423,28 +423,28 @@
 </div>
 
 <!-- IMPRESSUM MODAL -->
-<div id="impressum-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
-  <div style="max-width:680px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
-    <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Impressum</h2>
-    <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Angaben gemäß § 5 ECG</p>
+<div id="impressum-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="impressum-title">
+  <div class="modal-box modal-box--narrow">
+    <button class="modal-close" aria-label="Schließen">✕</button>
+    <h2 id="impressum-title" class="modal-title">Impressum</h2>
+    <p class="modal-meta">Angaben gemäß § 5 ECG</p>
 
-    <div style="line-height:1.9; color:#2D3748; font-size:0.92rem;">
+    <div class="modal-body">
 
-      <h3 style="margin:1.5rem 0 0.5rem;">Betreiber</h3>
+      <h3>Betreiber</h3>
       <p>Elias Pfister & Luca Marinelli<br>
       Kochabühel 6<br>
       6822 Satteins<br>
       Vorarlberg, Österreich</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">Kontakt</h3>
+      <h3>Kontakt</h3>
       <p>E-Mail: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a><br>
       Website: nearcare.at</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">Tätigkeit</h3>
+      <h3>Tätigkeit</h3>
       <p>NearCare betreibt eine digitale Vermittlungsplattform, die Altersheime, Pflegeeinrichtungen und Privatpersonen mit Schülern und Studenten aus Vorarlberg verbindet. Die Plattform ermöglicht die Vermittlung von nicht-medizinischen Betreuungstätigkeiten wie Gesellschaft leisten, Freizeitgestaltung und Alltagsunterstützung. NearCare ist ausschließlich technischer Dienstleister und tritt nicht als Arbeitgeber auf.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">Haftungsausschluss</h3>
+      <h3>Haftungsausschluss</h3>
       <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
 
     </div>
@@ -452,72 +452,72 @@
 </div>
 
 <!-- AGB MODAL -->
-<div id="agb-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; overflow-y:auto; padding:2rem 1rem;">
-  <div style="max-width:780px; margin:0 auto; background:#fff; border-radius:16px; padding:3rem; position:relative;">
-    <button class="modal-close" style="position:absolute; top:1.2rem; right:1.2rem; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#6B7280;">✕</button>
-    <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; margin-bottom:0.3rem;">Allgemeine Geschäftsbedingungen</h2>
-    <p style="color:#6B7280; font-size:0.85rem; margin-bottom:2rem;">Stand: April 2025 | Version 1.0</p>
+<div id="agb-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="agb-title">
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Schließen">✕</button>
+    <h2 id="agb-title" class="modal-title">Allgemeine Geschäftsbedingungen</h2>
+    <p class="modal-meta">Stand: April 2025 | Version 1.0</p>
 
-    <div style="line-height:1.8; color:#2D3748; font-size:0.92rem;">
+    <div class="modal-body">
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 1 Geltungsbereich</h3>
+      <h3>§ 1 Geltungsbereich</h3>
       <p>§ 1.1. Diese Allgemeinen Geschäftsbedingungen gelten für alle Rechtsgeschäfte zwischen der NearCare, betrieben von Elias Pfister und Luca Marinelli, mit Sitz in Vorarlberg, Österreich, und den Nutzern der Plattform nearcare.at.</p>
       <p>§ 1.2. NearCare betreibt eine digitale Vermittlungsplattform, die als technischer Dienstleister ausschließlich die Infrastruktur zur Verfügung stellt, über die Einrichtungen und Privatpersonen ("Auftraggeber") mit Helfern ("Helfer") in Kontakt treten können. NearCare ist weder Arbeitgeber noch Arbeitskräfteüberlasser und wird nicht als Vermittler oder Vertreter einer der Parteien tätig.</p>
       <p>§ 1.3. NearCare behält sich das Recht vor, diese AGB jederzeit zu ändern. Änderungen werden den Nutzern rechtzeitig per E-Mail mitgeteilt. Die weitere Nutzung der Plattform nach Inkrafttreten der Änderungen gilt als Zustimmung.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 2 Leistungsgegenstand</h3>
+      <h3>§ 2 Leistungsgegenstand</h3>
       <p>§ 2.1. NearCare stellt eine digitale Plattform bereit, auf der Auftraggeber Betreuungseinsätze für nicht-medizinische Tätigkeiten inserieren können und Helfer sich für diese Einsätze bewerben können.</p>
       <p>§ 2.2. Der Leistungsgegenstand von NearCare beschränkt sich ausschließlich auf die Bereitstellung der technischen Plattform-Infrastruktur. NearCare übernimmt keine Verantwortung für die tatsächliche Durchführung von Einsätzen, die Qualität der erbrachten Leistungen oder die Zahlungsabwicklung zwischen Auftraggebern und Helfern.</p>
       <p>§ 2.3. Vermittelte Tätigkeiten umfassen ausschließlich nicht-medizinische Betreuungsleistungen wie Spaziergänge, Gesellschaft leisten, Freizeitgestaltung, Alltagsarbeiten und Mahlzeitenbegleitung. Medizinische oder pflegerische Tätigkeiten sind ausdrücklich ausgeschlossen.</p>
       <p>§ 2.4. NearCare behält sich das Recht vor, die Plattform jederzeit zu modifizieren, einzustellen oder weiterzuentwickeln.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 3 Registrierung & Nutzung</h3>
+      <h3>§ 3 Registrierung & Nutzung</h3>
       <p>§ 3.1. Die Nutzung der Plattform setzt eine Registrierung voraus. Die Registrierung ist natürlichen Personen ab 16 Jahren sowie juristischen Personen gestattet.</p>
       <p>§ 3.2. Der Nutzer verpflichtet sich zur wahrheitsgemäßen und vollständigen Angabe seiner Daten bei der Registrierung. Falsche Angaben berechtigen NearCare zur sofortigen Sperrung des Accounts.</p>
       <p>§ 3.3. Der Nutzer ist verantwortlich für die Sicherheit seiner Zugangsdaten und haftet für alle Aktivitäten, die unter seinem Account vorgenommen werden.</p>
       <p>§ 3.4. Ein Account ist nicht übertragbar. Je natürlicher oder juristischer Person ist nur ein Account gestattet.</p>
       <p>§ 3.5. Jeder Helfer durchläuft vor der Freischaltung seines Accounts ein persönliches Onboarding-Gespräch mit dem NearCare Team – wahlweise persönlich oder per Videocall (z.B. Microsoft Teams). NearCare behält sich das Recht vor, die Freischaltung ohne Angabe von Gründen zu verweigern. Ziel des Gesprächs ist die persönliche Kennenlernung sowie die Sicherstellung der Eignung des Helfers für Betreuungseinsätze.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 4 Verhältnis zwischen Auftraggeber und Helfer</h3>
+      <h3>§ 4 Verhältnis zwischen Auftraggeber und Helfer</h3>
       <p>§ 4.1. NearCare ist ausschließlich technischer Dienstleister. Alle Verträge über Betreuungseinsätze kommen ausschließlich zwischen dem Auftraggeber und dem Helfer zustande. NearCare ist an diesen Verträgen nicht beteiligt.</p>
       <p>§ 4.2. Der Auftraggeber ist verantwortlich für die ordnungsgemäße Abwicklung des Einsatzes, insbesondere für die Einhaltung aller arbeitsrechtlichen, sozialversicherungsrechtlichen und steuerrechtlichen Vorschriften.</p>
       <p>§ 4.3. Der Helfer ist für die korrekte steuerliche und sozialversicherungsrechtliche Behandlung seiner Einkünfte selbst verantwortlich. NearCare übernimmt keine Personalverrechnung und ist nicht Arbeitgeber der Helfer.</p>
       <p>§ 4.4. Die Bezahlung des Helfers erfolgt direkt durch den Auftraggeber. NearCare ist nicht an der Zahlungsabwicklung beteiligt und übernimmt keine Haftung für ausbleibende Zahlungen.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 5 Preise & Abonnement</h3>
+      <h3>§ 5 Preise & Abonnement</h3>
       <p>§ 5.1. Die Nutzung der Plattform durch Helfer ist kostenlos.</p>
       <p>§ 5.2. Für Auftraggeber fällt eine monatliche Abonnementgebühr gemäß dem zum Zeitpunkt des Vertragsschlusses gültigen Preisblatt an.</p>
       <p>§ 5.3. Preisanpassungen werden dem Nutzer mindestens 4 Wochen vor Inkrafttreten per E-Mail mitgeteilt. Der Nutzer hat in diesem Fall das Recht zur außerordentlichen Kündigung.</p>
       <p>§ 5.4. Alle Preise verstehen sich zuzüglich der gesetzlichen Umsatzsteuer.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 6 Haftung</h3>
+      <h3>§ 6 Haftung</h3>
       <p>§ 6.1. NearCare haftet nicht für Schäden, die im Rahmen von über die Plattform vermittelten Einsätzen entstehen. Die Haftung für die Durchführung der Einsätze liegt ausschließlich beim Auftraggeber und dem Helfer.</p>
       <p>§ 6.2. NearCare haftet nicht für die Richtigkeit, Vollständigkeit oder Aktualität der von Nutzern eingestellten Inhalte.</p>
       <p>§ 6.3. NearCare ist gemäß § 18 Abs. 1 ECG nicht verpflichtet, übermittelte oder gespeicherte Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
       <p>§ 6.4. Eine Haftung von NearCare ist, mit Ausnahme von vorsätzlich oder grob fahrlässig verursachten Schäden sowie Personenschäden, ausgeschlossen.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 7 Datenschutz</h3>
+      <h3>§ 7 Datenschutz</h3>
       <p>§ 7.1. Die Verarbeitung personenbezogener Daten erfolgt gemäß der Datenschutzerklärung von NearCare und in Übereinstimmung mit der DSGVO sowie dem DSG.</p>
       <p>§ 7.2. Nutzerdaten werden ausschließlich für den Betrieb der Plattform und die Vermittlung von Einsätzen verwendet. Eine Weitergabe an Dritte erfolgt nicht ohne ausdrückliche Einwilligung des Nutzers.</p>
       <p>§ 7.3. Nutzer haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung ihrer personenbezogenen Daten. Anfragen sind an <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a> zu richten.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 8 Sperrung & Kündigung</h3>
+      <h3>§ 8 Sperrung & Kündigung</h3>
       <p>§ 8.1. NearCare behält sich das Recht vor, Nutzer bei Verstößen gegen diese AGB oder bei missbräuchlicher Nutzung der Plattform ohne Vorankündigung zu sperren.</p>
       <p>§ 8.2. Nutzer können ihr Konto jederzeit ohne Angabe von Gründen kündigen. Die Kündigung ist per E-Mail an <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a> zu richten.</p>
       <p>§ 8.3. NearCare kann Abonnementverträge mit einer Frist von 4 Wochen zum Monatsende kündigen.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 9 Verantwortlichkeit für Inhalte</h3>
+      <h3>§ 9 Verantwortlichkeit für Inhalte</h3>
       <p>§ 9.1. Nutzer sind für die von ihnen eingestellten Inhalte vollständig selbst verantwortlich. NearCare übernimmt keine Haftung für die Rechtmäßigkeit oder Richtigkeit nutzergenerierter Inhalte.</p>
       <p>§ 9.2. Nutzer verpflichten sich, keine rechtswidrigen, diskriminierenden, irreführenden oder anderweitig unzulässigen Inhalte auf der Plattform einzustellen.</p>
       <p>§ 9.3. NearCare ist berechtigt, Inhalte, die gegen diese AGB oder geltendes Recht verstoßen, ohne Vorankündigung zu entfernen.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">§ 10 Schlussbestimmungen</h3>
+      <h3>§ 10 Schlussbestimmungen</h3>
       <p>§ 10.1. Es gilt österreichisches Recht unter Ausschluss des UN-Kaufrechts.</p>
       <p>§ 10.2. Erfüllungsort und Gerichtsstand ist Vorarlberg, Österreich.</p>
       <p>§ 10.3. Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
       <p>§ 10.4. Änderungen und Ergänzungen dieser AGB bedürfen der Schriftform.</p>
 
-      <h3 style="margin:1.5rem 0 0.5rem;">Kontakt</h3>
+      <h3>Kontakt</h3>
       <p>NearCare · Elias Pfister & Luca Marinelli<br>Vorarlberg, Österreich<br>
       E-Mail: <a href="mailto:nearcare.office@gmail.com">nearcare.office@gmail.com</a><br>
       Website: nearcare.at</p>

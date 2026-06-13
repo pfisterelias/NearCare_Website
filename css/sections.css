@@ -152,6 +152,10 @@
   margin-bottom: 4rem;
 }
 
+.helfer-inner .section-sub {
+  max-width: 600px;
+}
+
 .helfer-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -208,6 +212,7 @@
   background: radial-gradient(ellipse, rgba(255,255,255,0.06) 0%, transparent 60%);
 }
 
+.cta-section .section-tag   { color: rgba(255,255,255,0.6); }
 .cta-section .section-title { color: var(--white); margin-bottom: 1rem; }
 
 .cta-section p {
