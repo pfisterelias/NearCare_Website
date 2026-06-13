@@ -37,6 +37,8 @@
   .faq-columns { grid-template-columns: 1fr; gap: 0; }
   .faq-col { margin-bottom: 2rem; }
 
+  .testimonials-grid { grid-template-columns: 1fr; }
+
   .form-row { grid-template-columns: 1fr; }
   .form-card { padding: 1.8rem; }
 
