@@ -17,7 +17,7 @@
 <meta property="og:locale" content="de_AT">
 <meta name="twitter:card" content="summary_large_image">
 <!-- Content Security Policy: blockiert unerlaubte Skript-Quellen und Form-Ziele -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src https://api.emailjs.com; img-src 'self' data:; form-action 'self' https://formspree.io; base-uri 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src https://api.emailjs.com https://formspree.io; img-src 'self' data:; form-action 'self' https://formspree.io; base-uri 'self';">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/layout.css">
@@ -252,41 +252,51 @@
     <div class="register-grid">
       <!-- HEIM FORM -->
       <div class="form-card heim reveal">
-        <form action="https://formspree.io/f/xzdyadge" method="POST">
+        <!-- Schritt 1: Formular -->
+        <div id="heim-step1">
           <div class="form-card-tag">🏠 Für Altersheime & Pflegeeinrichtungen</div>
           <h3>Als Einrichtung anmelden</h3>
           <p>Testen Sie NearCare kostenlos in Ihrer Einrichtung. Keine Bindung, kein Risiko.</p>
-          <!-- Honeypot: Formspree ignoriert Einreichungen, wenn dieses Feld gefüllt ist -->
-          <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
-          <div class="form-group">
-            <label>Name der Einrichtung</label>
-            <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau" required maxlength="100">
-          </div>
-          <div class="form-row">
+          <form id="heim-form" action="https://formspree.io/f/xzdyadge" method="POST">
+            <!-- Honeypot: Formspree ignoriert Einreichungen, wenn dieses Feld gefüllt ist -->
+            <input type="text" name="_gotcha" class="form-honeypot" tabindex="-1" autocomplete="off">
             <div class="form-group">
-              <label>Ansprechperson</label>
-              <input type="text" name="name" placeholder="Vor- und Nachname" required maxlength="100">
+              <label>Name der Einrichtung</label>
+              <input type="text" name="einrichtung" placeholder="z.B. Sozialzentrum Lochau" required maxlength="100">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Ansprechperson</label>
+                <input type="text" name="name" placeholder="Vor- und Nachname" required maxlength="100">
+              </div>
+              <div class="form-group">
+                <label>Funktion</label>
+                <input type="text" name="funktion" placeholder="z.B. Heimleitung" required maxlength="100">
+              </div>
             </div>
             <div class="form-group">
-              <label>Funktion</label>
-              <input type="text" name="funktion" placeholder="z.B. Heimleitung" required maxlength="100">
+              <label>E-Mail Adresse</label>
+              <input type="email" name="email" placeholder="name@einrichtung.at" required>
             </div>
-          </div>
-          <div class="form-group">
-            <label>E-Mail Adresse</label>
-            <input type="email" name="email" placeholder="name@einrichtung.at" required>
-          </div>
-          <div class="form-group">
-            <label>Telefonnummer</label>
-            <input type="tel" name="telefon" placeholder="+43 ..." required maxlength="20">
-          </div>
-          <div class="form-group">
-            <label>Gemeinde / Ort</label>
-            <input type="text" name="ort" placeholder="z.B. Lochau" required maxlength="100">
-          </div>
-          <button type="submit" class="btn-form">Kostenlos anmelden →</button>
-          <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
-        </form>
+            <div class="form-group">
+              <label>Telefonnummer</label>
+              <input type="tel" name="telefon" placeholder="+43 ..." required maxlength="20">
+            </div>
+            <div class="form-group">
+              <label>Gemeinde / Ort</label>
+              <input type="text" name="ort" placeholder="z.B. Lochau" required maxlength="100">
+            </div>
+            <button type="submit" class="btn-form" id="heim-submit-btn">Kostenlos anmelden →</button>
+            <p class="form-note">Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+          </form>
+        </div>
+
+        <!-- Schritt 2: Erfolg -->
+        <div id="heim-step2" style="display:none; text-align:center; padding: 2rem 0;">
+          <div style="font-size:3rem; margin-bottom:1rem;">✅</div>
+          <h3>Anfrage eingegangen!</h3>
+          <p style="color:var(--gray);">Wir melden uns innerhalb von 24 Stunden bei Ihnen. Danke für Ihr Interesse an NearCare.</p>
+        </div>
       </div>
 
       <!-- HELFER FORM -->

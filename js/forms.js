@@ -206,18 +206,42 @@ async function helferVerifyCode() {
   }
 }
 
-/* ── Heim-Formular (Formspree) ── */
-document.querySelector('.form-card.heim form').addEventListener('submit', function(e) {
-  const btn    = this.querySelector('.btn-form');
+/* ── Heim-Formular (Formspree AJAX) ── */
+document.getElementById('heim-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn    = document.getElementById('heim-submit-btn');
   const inputs = this.querySelectorAll('input:not(.form-honeypot), select');
   let filled   = true;
   inputs.forEach(i => { if (!i.value.trim()) filled = false; });
 
   if (!filled) {
-    e.preventDefault();
     btn.textContent = 'Bitte alle Felder ausfüllen';
     btn.style.background = '#E74C3C';
     setTimeout(() => { btn.textContent = 'Kostenlos anmelden →'; btn.style.background = ''; }, 2000);
+    return;
+  }
+
+  btn.textContent = 'Wird gesendet...';
+  btn.style.background = '#888';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(this)
+    });
+
+    if (!res.ok) throw new Error('Formspree error');
+
+    document.getElementById('heim-step1').style.display = 'none';
+    document.getElementById('heim-step2').style.display = 'block';
+  } catch {
+    btn.textContent = 'Fehler – nochmal versuchen';
+    btn.style.background = '#E74C3C';
+    btn.disabled = false;
+    setTimeout(() => { btn.textContent = 'Kostenlos anmelden →'; btn.style.background = ''; }, 3000);
   }
 });
 
