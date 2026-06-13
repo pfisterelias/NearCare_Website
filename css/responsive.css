@@ -34,6 +34,9 @@
 
   .how-header, .pricing-header { margin-bottom: 2rem; }
 
+  .faq-columns { grid-template-columns: 1fr; gap: 0; }
+  .faq-col { margin-bottom: 2rem; }
+
   .form-row { grid-template-columns: 1fr; }
   .form-card { padding: 1.8rem; }
 
