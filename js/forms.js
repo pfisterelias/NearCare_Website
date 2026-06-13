@@ -139,9 +139,10 @@ async function helferSendCode(resend = false) {
   const wohnort  = sanitize(document.getElementById('h-wohnort').value);
 
   if (!resend) {
-    if (!vorname || !nachname || !email || !telefon || !status || !wohnort) {
-      helferSetBtn(btn, 'Bitte alle Felder ausfüllen', '#E74C3C');
-      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2000);
+    const ageConfirm = document.getElementById('h-age-confirm').checked;
+    if (!vorname || !nachname || !email || !telefon || !status || !wohnort || !ageConfirm) {
+      helferSetBtn(btn, 'Bitte alle Felder ausfüllen & Alter bestätigen', '#E74C3C');
+      setTimeout(() => helferSetBtn(btn, 'Jetzt bewerben →'), 2500);
       return;
     }
 

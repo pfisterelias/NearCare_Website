@@ -701,6 +701,30 @@
   margin-top: 1rem;
 }
 
+.form-check { margin-top: 0.5rem; }
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--gray);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  accent-color: var(--terra);
+}
+
+.checkbox-label a {
+  color: var(--terra);
+  text-decoration: underline;
+}
+
 /* Honeypot-Feld – für Bots unsichtbar, für Menschen versteckt */
 .form-honeypot {
   display: none !important;
