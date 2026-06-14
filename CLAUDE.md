@@ -24,6 +24,11 @@ Entwicklertagebuch (pro Session): siehe [`CHANGELOG.md`](CHANGELOG.md)
 
 ```
 NearCare_Website/
+├── assets/
+│   ├── favicon.svg       # Favicon (NC-Logo, Navy/Terra auf Cream)
+│   ├── nearcare-logo.svg # Vollständiges Wortmarken-Logo
+│   ├── og-preview.png    # Social-Sharing-Bild (1200×630px)
+│   └── og-preview.svg    # Vektor-Version des Previews
 ├── css/
 │   ├── base.css          # CSS-Variablen, Reset, Typografie, Animationen, .hidden
 │   ├── layout.css        # Navigation, Footer, Abschnittsbasis
@@ -33,14 +38,12 @@ NearCare_Website/
 ├── js/
 │   ├── ui.js             # Navigation, Tabs, Modals, Scroll-Reveal, Touch-Feedback
 │   └── forms.js          # EmailJS-Konfiguration, Helfer-Formular, Heim-Formular
-├── favicon.svg           # Favicon (NC-Logo, Navy/Terra auf Cream)
-├── nearcare-logo.svg     # Vollständiges Wortmarken-Logo
-├── og-preview.png        # Social-Sharing-Bild (1200×630px)
-├── og-preview.svg        # Vektor-Version des Previews
-├── CNAME                 # nearcare.at (GitHub Pages Custom Domain)
-├── CLAUDE.md             # Technische Referenzdokumentation (diese Datei)
 ├── CHANGELOG.md          # Entwicklertagebuch (pro Session, neueste zuerst)
-└── index.html            # Einzige HTML-Seite (Single-Page-Website)
+├── CLAUDE.md             # Technische Referenzdokumentation (diese Datei)
+├── CNAME                 # nearcare.at (GitHub Pages Custom Domain)
+├── index.html            # Einzige HTML-Seite (Single-Page-Website)
+├── robots.txt            # Crawler-Regeln & Sitemap-Pointer
+└── sitemap.xml           # URL-Karte für Google
 ```
 
 ## Designsystem
@@ -173,5 +176,5 @@ Push auf `main` → GitHub Actions deployt automatisch auf GitHub Pages → near
 
 ## Kontakt
 
-**Elias Pfister & Nathan Pfister**
+**Elias Pfister**
 nearcare.office@gmail.com · nearcare.at · Vorarlberg, Österreich
